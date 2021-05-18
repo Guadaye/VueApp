@@ -10,11 +10,26 @@ Vue.use( Router );
 
 import Home from '@/routes/Home.vue'
 import About from '@/routes/About.vue'
+import PlayerInGame from '@/routes/PlayerInGame.vue'
+import HostInGame from '@/routes/HostInGame.vue'
+import HostLobby from '@/routes/HostLobby.vue'
+import EditorLobby from '@/routes/EditorLobby.vue'
+import GameSettingEditor from '@/routes/GameSettingEditor.vue'
+import QuestionEditor from '@/routes/QuestionEditor.vue'
+import QuestionPage from '@/routes/QuestionPage.vue'
 
 
 export default new Router({
     routes: [
-        { path:"/",      name:"Home",  component: Home, props: { name: "DemoApp"} },
+        { path:"/",      name:"Home",  component: Home, props: { name: "Jeopardy"} },
         { path:"/about", name:"About", component: About },
+        { path:"/playerInGame", name:"PlayerInGame", component: PlayerInGame },
+        { path:"/HostInGame", name:"HostInGame", component: HostInGame },
+        { path:"/HostLobby", name:"HostLobby", component: HostLobby },
+        { path:"/EditorLobby", name:"EditorLobby", component: EditorLobby },
+        { path:"/GameSettingEditor", name:"GameSettingEditor", component: GameSettingEditor },
+        { path:"/QuestionEditor", name:"QuestionEditor", component: QuestionEditor },
+        { path:"/QuestionPage", name:"QuestionPage", component: QuestionPage }
+
     ]
 });

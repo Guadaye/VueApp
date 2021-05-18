@@ -18,7 +18,7 @@ Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
 
     import Controller from '@/mixins/controller'
 
-    class HomeController extends Controller {
+    class PlayerHomeController extends Controller {
 
         constructor( name, subComponentList = []) {
             super( name, subComponentList );
@@ -30,7 +30,7 @@ Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
         }
     }
 
-    export default new HomeController('pgHome');
+    export default new PlayerHomeController('pgHome');
 
 </script>
 <style scoped>
