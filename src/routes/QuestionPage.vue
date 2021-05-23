@@ -8,14 +8,45 @@ Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
 <template>
 
 
-    <section class="about-container">
+    <section class="container">
 
-        <div class="about">{{ name }} your Vue.js App</div>
+        <div class="about">{{ name }} 
+
+        <pgScoreBoard></pgScoreBoard>
+
+        <div class = "question"> Question1: What is the longest river in the world?</div>
+        <table>
+            <tr>
+                <th>Player1</th>
+                <th></th>
+
+            </tr>
+            <tr>
+                <th>Player2</th>
+                <th></th>
+
+            </tr>
+            <tr>
+                <th>Player3</th>
+                <th></th>
+
+            </tr>
+            <tr>
+                <th>Player4</th>
+                <th></th>
+
+            </tr>
+        </table>
+
+        </div>
+    
     </section>
 
 </template>
 <script>
     import Controller from '@/mixins/controller'
+    import pgGivePointsButton from'@/components/GivePointsButton.vue'
+     import pgScoreBoard from '@/components/ScoreBoard.vue'
 
     class QuestionPageController extends Controller {
 
@@ -27,14 +58,17 @@ Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
         }
     }
 
-    export default new QuestionPageController('pgQuestionPage');
+    export default new QuestionPageController('pgQuestionPage',{pgGivePointsButton,pgScoreBoard});
 
 </script>
 <style>
 /* Local styles for this template */
-    .about-container {
-        display: inline-block;
+    .container {
+        display: flex;
         width: 100%;
+        flex-direction:column;
+        flex-flow:row wrap;
+         text-align: center; 
     }
 
     .about {

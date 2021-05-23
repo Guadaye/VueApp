@@ -8,15 +8,34 @@ Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
 <template>
 
 
-    <section class="about-container">
+    <section class="container">
 
-        <div class="about">{{ name }} your Vue.js App</div>
+        <div class="about">{{ name }} 
+
+            <form id="info-form" class="form">
+                    Name of your game:<br>
+                    <input type="text" name="levelName" value="Game1" /><br>
+                    Question numbers for each catagory:<br>
+                    <input type="text" name="obstacles" value="4" /><br>
+                    Catagory picked:<br>
+                    
+                    <pgPickCatagoryButton></pgPickCatagoryButton>
+
+                    <input type="submit" name="action" value="Submit" />
+            </form>
+
+
+
+
+
+
+        </div>
     </section>
 
 </template>
 <script>
     import Controller from '@/mixins/controller'
-
+    import pgPickCatagoryButton from "@/components/PickCatagoryButton.vue"
     class GameSettingEditorController extends Controller {
 
         constructor( name, subComponentList = []) {
@@ -27,14 +46,17 @@ Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
         }
     }
 
-    export default new GameSettingEditorController('pgGameSettingEditorController');
+    export default new GameSettingEditorController('pgGameSettingEditor',{pgPickCatagoryButton});
 
 </script>
 <style>
 /* Local styles for this template */
-    .about-container {
-        display: inline-block;
+    .container {
+        display: flex;
         width: 100%;
+        flex-direction:column;
+        flex-flow:row wrap;
+         text-align: center; 
     }
 
     .about {

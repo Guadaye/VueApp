@@ -7,18 +7,17 @@
 -->
 <template>
 
-    <section class="container">  <!-- Just one main element per template -->
-       <div class = "splash">
-    
-        <div>{{ title }}</div>
-           </div>
-        <div>
-            <!-- Put your HTML template here-->
+    <section class="component-style">  <!-- Just one main element per template -->
+
+
+                <select id="game" name="Game">
+                    <option value="">catagoryplaceholder </option>
+                </select>
+                <button>Add new catagory</button>
+
             <slot></slot>
 
-              <button @click="doIt( event )">Do it!</button>
-        </div>
-      
+
     </section>
 
 </template>
@@ -27,21 +26,25 @@
 
     // import other components you use here...
 
-    class SplashForHostController extends Controller {
+    class PickCatagoryButtonController extends Controller {
 
         constructor( name, subComponentList = []) {
             super( name, subComponentList )
             this.vm = {
-                someData: "SplashScreen"
+                someData: "Hello world"
             }
             this.props = { // props are passed in when using this component
-                title: String,
-                default: 'Default',
+                title: String
             }
+        }
+
+        // your local component methods
+        doIt( event ) {
+            // A method that does something to the props or viewModel, or global state
         }
     }
 
-    export default new SplashForHostController('pgSplashForHost'/* , { subComponent, anotherComponent } */);
+    export default new PickCatagoryButtonController('pgPickCatagoryButton'/* , { subComponent, anotherComponent } */);
 
 </script>
 <style scoped>
@@ -49,23 +52,14 @@
     Add "scoped" attribute to limit CSS to this component only <style scoped>
     styles that are specific to this component only, not sub-children
     */
-    .container {
-        display: flex;
-        flex-direction:row;
-        flex-wrap:wrap;
-        justify-content:space-evenly;
-        align-content: space-around;
-        align-items:center;
-        z-index: 9000;
+    .component-style {
+
     }
 
-    .splash {
-        background-size:100% 100%;
+    .component-item {
         flex-grow: inherit;
         flex-shrink: inherit;
         order: inherit;
-        height:512px;
-        width:512px;
     }
 
 </style>

@@ -26,7 +26,6 @@ export default new Router({
         { path:"/playerInGame", name:"PlayerInGame", component: PlayerInGame },
         { path:"/HostInGame", name:"HostInGame", component: HostInGame },
         { path:"/HostLobby", name:"HostLobby", component: HostLobby },
-        { path:"/EditorLobby", name:"EditorLobby", component: EditorLobby },
         { path:"/GameSettingEditor", name:"GameSettingEditor", component: GameSettingEditor },
         { path:"/QuestionEditor", name:"QuestionEditor", component: QuestionEditor },
         { path:"/QuestionPage", name:"QuestionPage", component: QuestionPage }

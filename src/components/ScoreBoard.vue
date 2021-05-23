@@ -7,18 +7,16 @@
 -->
 <template>
 
-    <section class="container">  <!-- Just one main element per template -->
-       <div class = "splash">
-    
+    <section class="component-style">  <!-- Just one main element per template -->
         <div>{{ title }}</div>
-           </div>
         <div>
-            <!-- Put your HTML template here-->
-            <slot></slot>
-
-              <button @click="doIt( event )">Do it!</button>
+        <div  class = "scoreBoard">
+                <div> Team1: 20 </div>
+                <div> Team2: 20 </div>
         </div>
-      
+            <slot></slot>
+        </div>
+
     </section>
 
 </template>
@@ -27,21 +25,25 @@
 
     // import other components you use here...
 
-    class SplashForHostController extends Controller {
+    class ScordBoardController extends Controller {
 
         constructor( name, subComponentList = []) {
             super( name, subComponentList )
             this.vm = {
-                someData: "SplashScreen"
+                someData: "Hello world"
             }
             this.props = { // props are passed in when using this component
-                title: String,
-                default: 'Default',
+                title: String
             }
+        }
+
+        // your local component methods
+        doIt( event ) {
+            // A method that does something to the props or viewModel, or global state
         }
     }
 
-    export default new SplashForHostController('pgSplashForHost'/* , { subComponent, anotherComponent } */);
+    export default new ScordBoardController('pgGScordBoard'/* , { subComponent, anotherComponent } */);
 
 </script>
 <style scoped>
@@ -49,23 +51,17 @@
     Add "scoped" attribute to limit CSS to this component only <style scoped>
     styles that are specific to this component only, not sub-children
     */
-    .container {
-        display: flex;
-        flex-direction:row;
-        flex-wrap:wrap;
-        justify-content:space-evenly;
-        align-content: space-around;
-        align-items:center;
-        z-index: 9000;
+    .component-style {
+
     }
 
-    .splash {
-        background-size:100% 100%;
+    .component-item {
         flex-grow: inherit;
         flex-shrink: inherit;
         order: inherit;
-        height:512px;
-        width:512px;
     }
 
+    .scoreBoard{
+        margin:40px 40px; 
+    }
 </style>

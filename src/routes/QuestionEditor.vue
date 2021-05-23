@@ -1,40 +1,68 @@
 <!--
 VFS VUE Single File Component
 
-<pg-about name="User"></pg-about>
+<pgQuestionEditor name="User"></pgQuestionEditor>
 
-Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
+Copyright (c) 2018.Haojun All Rights Reserved.
 -->
 <template>
 
 
-    <section class="about-container">
+    <section class="container">
 
-        <div class="about">{{ name }} your Vue.js App</div>
+        <div class="about">{{ name }}
+
+            <h1>Choose a game to edit</h1>
+            <div class = "table">
+                <table>
+                    <tr>
+                        <th>Game1</th>
+                        <th><Button>Edit Game Settings</Button></th>
+                        <th><Button>Edit Questions</Button></th>
+                    </tr>
+                </table>
+            </div>
+                <Button>Create a new game</Button>
+
+                <br><br>
+                <br><br>
+                <form id="info-form" class="form">
+                    Add a new catagory:<br>
+                    <input type="text" name="levelName" value="level1" /><br>
+                    <input type="submit" name="action" value="Submit" />
+
+                </form>
+
+        </div>
+
+
     </section>
 
 </template>
 <script>
     import Controller from '@/mixins/controller'
 
-    class QuestionEditorController extends Controller {
+    class EditorLobbyController extends Controller {
 
         constructor( name, subComponentList = []) {
             super( name, subComponentList );
             this.vm = {
-                name: 'PlayerInGame',
+                name: 'Editor Lobby',
             }
         }
     }
 
-    export default new QuestionEditorController('pgPlayerInGame');
+    export default new EditorLobbyController('pgQEditorLobby');
 
 </script>
 <style>
 /* Local styles for this template */
-    .about-container {
-        display: inline-block;
+    .container {
+        display: flex;
         width: 100%;
+        flex-direction:column;
+        flex-flow:row wrap;
+         text-align: center; 
     }
 
     .about {

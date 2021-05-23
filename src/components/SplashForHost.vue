@@ -8,15 +8,17 @@
 <template>
 
     <section class="container">  <!-- Just one main element per template -->
-       <div class = "splash">
+        <div class = "splash">
     
-        <div>{{ title }}</div>
-           </div>
-        <div>
-            <!-- Put your HTML template here-->
-            <slot></slot>
+            <div>{{ title }}</div>
+          
+            <h1>Choose a game to host</h1>
+                <select id="game" name="Game">
+                    <option value=""> </option>
+                </select><br />
 
-              <button @click="doIt( event )">Do it!</button>
+
+            <button>Start!</button>
         </div>
       
     </section>
@@ -27,7 +29,7 @@
 
     // import other components you use here...
 
-    class SplashForHostController extends Controller {
+    class SplashController extends Controller {
 
         constructor( name, subComponentList = []) {
             super( name, subComponentList )
@@ -41,7 +43,7 @@
         }
     }
 
-    export default new SplashForHostController('pgSplashForHost'/* , { subComponent, anotherComponent } */);
+    export default new SplashController('pgSplash'/* , { subComponent, anotherComponent } */);
 
 </script>
 <style scoped>
