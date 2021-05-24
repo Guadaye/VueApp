@@ -47,5 +47,5 @@ Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
 
 </script>
 
-<style>
+<style scoped>
 </style>

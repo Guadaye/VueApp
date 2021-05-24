@@ -43,7 +43,7 @@
     // export a definition for this view
     export default new AppController('pgApp', { pgHeader, pgSidebar, pgNavbar });
 </script>
-<style>
+<style scoped>
     /**
     * CSS Styles for VFS Demo App
     *

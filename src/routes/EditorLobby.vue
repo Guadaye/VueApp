@@ -55,7 +55,7 @@ Copyright (c) 2018.Haojun All Rights Reserved.
     export default new EditorLobbyController('pgQEditorLobby');
 
 </script>
-<style>
+<style scoped>
 /* Local styles for this template */
     .container {
         display: flex;

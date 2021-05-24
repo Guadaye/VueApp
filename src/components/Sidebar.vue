@@ -38,4 +38,4 @@ Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
     export default new SidebarController('pgSidebar', { pgNavbar });
 
 </script>
-<style></style>
+<style scoped></style>

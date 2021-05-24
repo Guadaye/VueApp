@@ -49,7 +49,7 @@ Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
     export default new GameSettingEditorController('pgGameSettingEditor',{pgPickCatagoryButton});
 
 </script>
-<style>
+<style scoped>
 /* Local styles for this template */
     .container {
         display: flex;

@@ -40,7 +40,7 @@ Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
     export default new HostLobbyController('pgHostLobby',{pgTeamPickArea,pgSplashForHost});
 
 </script>
-<style>
+<style scoped>
 /* Local styles for this template */
     .container {
         display: flex;
