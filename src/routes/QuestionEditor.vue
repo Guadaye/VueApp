@@ -12,27 +12,27 @@ Copyright (c) 2018.Haojun All Rights Reserved.
 
         <div class="about">{{ name }}
 
-            <h1>Choose a game to edit</h1>
-            <div class = "table">
-                <table>
-                    <tr>
-                        <th>Game1</th>
-                        <th><Button>Edit Game Settings</Button></th>
-                        <th><Button>Edit Questions</Button></th>
-                    </tr>
-                </table>
-            </div>
-                <Button>Create a new game</Button>
+            <h1>Game1</h1>
+            <h2>Question1</h2>
+          Catagory:<br>
+          <select id="catagory" name="catagory">
+            <option value=""> </option>
+          </select><br />
 
-                <br><br>
-                <br><br>
-                <form id="info-form" class="form">
-                    Add a new catagory:<br>
-                    <input type="text" name="levelName" value="level1" /><br>
-                    <input type="submit" name="action" value="Submit" />
+            <form id="info-form" class="form">
+            Question:<br>
+            <input type="text" name="Question" value="" /><br>
+            Answer:<br>
+            <input type="text" name="Answer" value="" /><br>
+            QuestionValue:<br>
+            <input type="text" name="QuestionValue" value="" /><br>
 
-                </form>
+            <input type="submit" name="action" value="Submit" />
 
+          </form>
+          <button class="button">Previous Question</button>
+          <button class="button">Next Question</button>
+          <button class="button">Delete Current Question</button>
         </div>
 
 

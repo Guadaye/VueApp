@@ -9,17 +9,16 @@ Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
 
 
     <section class="container">
-
-                <pgSplashForHost title = "Choose a game"></pgSplashForHost>
-<div class = "about">
-        <h1>Avaliable players:</h1>
+        <pgSplashForHost title = "Choose a game"></pgSplashForHost>
+        <div class = "about">
+            <h1>Avaliable players:</h1>
             <div class="playerList">"Player1, Player2, Player3, Player4"</div>
-        <div class = "teamArea">
-            <pgTeamPickArea></pgTeamPickArea>
-            <pgTeamPickArea></pgTeamPickArea>
-                     <button >Start!</button>
+               <div class = "teamArea">
+                    <pgTeamPickArea></pgTeamPickArea>
+                    <pgTeamPickArea></pgTeamPickArea>
+                    <button >Start!</button>
+               </div>
         </div>
-</div>
     </section>
 
 </template>
