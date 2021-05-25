@@ -8,14 +8,9 @@
 <template>
 
     <section class="component-style">  <!-- Just one main element per template -->
-        <div>{{ title }}</div>
-        <div>
-        <div  class = "scoreBoard">
-                <div> Team1: 20 </div>
-                <div> Team2: 20 </div>
-        </div>
-            <slot></slot>
-        </div>
+
+      <div class="point">Team A: 20 point</div>
+      <div class="point">Team B: 30 point</div>
 
     </section>
 

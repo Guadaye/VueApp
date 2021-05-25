@@ -8,60 +8,91 @@ Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
 <template>
 
 
-    <section class="container">
+  <div>
+    <div v-if="!isShowPoints" class="container">
+      <h2>Your Nickname is?</h2>
+      <input v-model="name" placeholder="nickname" type="text">
+      <button @click="submit">submit</button>
+    </div>
 
-        <div class="about">{{ name }} 
-
+      <div v-else class="container">
         <pgScoreBoard></pgScoreBoard>
         <h1> Team1 Player: Echo </h1>
         <button class="button">Click Me!</button>
-        </div>
+    </div>
 
-    </section>
+  </div>
 
 </template>
 <script>
-    import Controller from '@/mixins/controller'
-    import pgScoreBoard from '@/components/ScoreBoard.vue'
-    class PlayerInGameController extends Controller {
+import Controller from '@/mixins/controller'
+import pgScoreBoard from '@/components/ScoreBoard.vue'
 
-        constructor( name, subComponentList = []) {
-            super( name, subComponentList );
-            this.vm = {
-                name: 'PlayerInGamePage',
-            }
-        }
+class PlayerInGameController extends Controller {
+
+  constructor(name, subComponentList = []) {
+    super(name, subComponentList);
+    this.vm = {
+      name: '',
+      isShowPoints:false
     }
+  }
 
-    export default new PlayerInGameController('pgPlayerInGame',{pgScoreBoard});
+  submit() {
+    if(!this.name){
+      alert("please input name")
+      return;
+    }
+    this.isShowPoints=true;
+  }
+}
+
+export default new PlayerInGameController('pgPlayerInGame', {pgScoreBoard});
 
 </script>
 <style scoped>
 /* Local styles for this template */
-    .container {
-        display: flex;
-        width: 100%;
-        flex-direction:column;
-        flex-flow:row wrap;
-         text-align: center; 
-    }
+.container {
 
-    .about {
-        margin:2vw;
-        border: 1px solid black;
-        background-color: lightgray;
-        color: black;
-        height: 78vh;
-        width: 80vw;
-    }
+  display: flex;
+  width: 800px;
+  padding: 10% 25% 0 25%;
+  flex-flow: column wrap;
+  text-align: center;
+  /*background: indianred;*/
+  text-align: center;
+  justify-content: space-around; /*横向轴线*/
+  align-content: flex-start; /*纵向轴线*/
+  color: black;
 
-    .button{
-        margin:20px 20px;
-        width: 200px;
-        height: 200px;
-    }
+}
 
-    .scoreBoard{
-        margin:40px 40px; 
-    }
+.container input {
+  margin-top: 100px;
+}
+
+.container button {
+
+  width: 80px;
+  margin: 100px auto;
+}
+
+.about {
+  margin: 2vw;
+  border: 1px solid black;
+  background-color: lightgray;
+  color: black;
+  height: 78vh;
+  width: 80vw;
+}
+
+.button {
+  margin: 20px 20px;
+  width: 200px;
+  height: 200px;
+}
+
+.scoreBoard {
+  margin: 40px 40px;
+}
 </style>
