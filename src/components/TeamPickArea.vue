@@ -9,7 +9,7 @@
 
     <section class="component-style">  <!-- Just one main element per template -->
 
-                <p1>Team1</p1>
+                <h1>Team1</h1>
                 <select id="game" name="Game">
                     <option value="">Player1 </option>
                 </select>

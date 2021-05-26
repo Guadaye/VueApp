@@ -1,6 +1,5 @@
 <!--
 <pg-app></pg-app>
-@copyright (c) 2018. Scott Henshaw, Clinton Jay Ramonida. All Rights Reserved.
 -->
 <template>
 

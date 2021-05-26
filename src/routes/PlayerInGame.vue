@@ -2,14 +2,12 @@
 VFS VUE Single File Component
 
 <pg-about name="User"></pg-about>
-
-Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
 -->
 <template>
 
 
   <div>
-    <div v-if="!isShowPoints" class="container">
+    <div v-if="isSplash" class="container">
       <h2>Your Nickname is?</h2>
       <input v-model="name" placeholder="nickname" type="text">
       <button @click="submit">submit</button>
@@ -34,7 +32,7 @@ class PlayerInGameController extends Controller {
     super(name, subComponentList);
     this.vm = {
       name: '',
-      isShowPoints:false
+      isSplash:true
     }
   }
 
@@ -43,7 +41,7 @@ class PlayerInGameController extends Controller {
       alert("please input name")
       return;
     }
-    this.isShowPoints=true;
+    this.isSplash=false;
   }
 }
 
@@ -77,14 +75,7 @@ export default new PlayerInGameController('pgPlayerInGame', {pgScoreBoard});
   margin: 100px auto;
 }
 
-.about {
-  margin: 2vw;
-  border: 1px solid black;
-  background-color: lightgray;
-  color: black;
-  height: 78vh;
-  width: 80vw;
-}
+
 
 .button {
   margin: 20px 20px;

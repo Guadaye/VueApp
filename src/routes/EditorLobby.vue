@@ -11,7 +11,6 @@ Copyright (c) 2018.Haojun All Rights Reserved.
     <section class="container">
 
         <div class="about">{{ name }}
-
             <h1>Choose a game to edit</h1>
             <div class = "table">
                 <table>
@@ -30,12 +29,9 @@ Copyright (c) 2018.Haojun All Rights Reserved.
                     Add a new catagory:<br>
                     <input type="text" name="levelName" value="level1" /><br>
                     <input type="submit" name="action" value="Submit" />
-
                 </form>
 
         </div>
-
-
     </section>
 
 </template>
@@ -55,6 +51,7 @@ Copyright (c) 2018.Haojun All Rights Reserved.
     export default new EditorLobbyController('pgQEditorLobby');
 
 </script>
+
 <style scoped>
 /* Local styles for this template */
     .container {
@@ -72,5 +69,10 @@ Copyright (c) 2018.Haojun All Rights Reserved.
         color: black;
         height: 78vh;
         width: 80vw;
+    }
+    .table{
+        
+        width:50%;
+        text-align: center;
     }
 </style>
