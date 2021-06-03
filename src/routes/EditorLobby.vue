@@ -13,15 +13,17 @@ Copyright (c) 2018.Haojun All Rights Reserved.
         <div class="about">{{ name }}
             <h1>Choose a game to edit</h1>
             <div class = "table">
-                <table>
-                    <tr>
-                        <th>Game1</th>
-                        <th><Button>Edit Game Settings</Button></th>
-                        <th><Button>Edit Questions</Button></th>
-                    </tr>
-                </table>
+                <li v-for="game in gameList" :key ="game.name">
+                    
+                    <div class = game-info>
+                        <div>{{game.name}}</div>
+                        <button @click="submit">Edit Game Settings</button>
+                        <button @click="submit">Edit Questions</button>
+                    </div>
+
+                </li>
             </div>
-                <Button>Create a new game</Button>
+                 <button @click="createNewGame()">Create a new game!</button>
 
                 <br><br>
                 <br><br>
@@ -37,14 +39,21 @@ Copyright (c) 2018.Haojun All Rights Reserved.
 </template>
 <script>
     import Controller from '@/mixins/controller'
-
+    import Game from '@/model/Game.js'
     class EditorLobbyController extends Controller {
 
         constructor( name, subComponentList = []) {
             super( name, subComponentList );
             this.vm = {
+                gameList:[],
                 name: 'Editor Lobby',
             }
+        }
+
+        createNewGame()
+        {
+            let game = new Game();
+            gameList.push(game);
         }
     }
 
