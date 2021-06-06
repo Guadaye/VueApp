@@ -9,52 +9,135 @@ Copyright (c) 2018.Haojun All Rights Reserved.
 
 
     <section class="container">
+        <div v-if="gameSettingPage" class = "container">
 
-        <div class="about">{{ name }}
-            <h1>Choose a game to edit</h1>
-            <div class = "table">
-                <li v-for="game in gameList" :key ="game.name">
-                    
-                    <div class = game-info>
-                        <div>{{game.name}}</div>
-                        <button @click="submit">Edit Game Settings</button>
-                        <button @click="submit">Edit Questions</button>
+            <form @submit.prevent = "createNewGame()"  class="form">
+                    <label>Name of your game:</label><br>
+                    <input type="text"  value="Game1" v-model="gameName"><br>
+
+                    <label>Question numbers for each catagory:</label><br>
+                    <input type="text"  value="4" v-model="questionNumber" ><br>
+
+                    <label>Catagory picked:</label> <button @click="addAnotherCatagory">Add</button>
+                    <div v-for="item in chosenCatagoryList" :key="item.catagoryName">
+
+                        <select v-model ="chosenCatagoryName"><br>
+                            <option v-for="catagory in catagoryList"  :key="catagory.catagoryName"> {{catagory.catagoryName}}  </option>    
+                        </select><br>
+                        
                     </div>
 
-                </li>
-            </div>
-                 <button @click="createNewGame()">Create a new game!</button>
+                
+                    <input type="submit"  value="Create Game!" >
+  
+            </form>
+        </div>
 
+        <div v-else class="about">{{ name }}
+            <h1>Choose a game to edit</h1>
+            <div class = "game-list">
+                
+                   <div v-for="game in gameList" :key ="game.name" class="game-item">
+                        <span>game1</span>
+                        <button class="" @click="gameSetting(name)">Edit Game Settings</button>
+                        <button @click="editQuestions">Edit Questions</button>
+                        <button @click="setActive">Set Active</button>
+                   </div>
+                        <button @click="gameSetting()">Create a new game!</button>
+            </div>
+         
                 <br><br>
                 <br><br>
-                <form id="info-form" class="form">
-                    Add a new catagory:<br>
-                    <input type="text" name="levelName" value="level1" /><br>
-                    <input type="submit" name="action" value="Submit" />
+
+
+                <form @submit.prevent = "catagorySubmit" class="form">
+
+                    <label>Add a new catagory:</label>
+                    <input type="text"  v-model="catagoryName" ><br>
+                    <input type = "submit" value = "submit">        
                 </form>
 
         </div>
     </section>
-
 </template>
+
+
 <script>
     import Controller from '@/mixins/controller'
-    import Game from '@/model/Game.js'
+    import GameE from '@/model/Game.js'
+    import Question from '@/model/Question.js'
+    import Catagory from '@/model/Catagory.js'
     class EditorLobbyController extends Controller {
-
         constructor( name, subComponentList = []) {
             super( name, subComponentList );
             this.vm = {
+
+                currentGame:[],
                 gameList:[],
+                gameName: "",
+                questionNumber : 4,
+                chosenCatagoryList:[],
+                chosenCatagoryName: "",
+                catagoryName: "",
+                catagoryList:[
+                    {catagoryName: "science", questionList:[{question:"what is the color of apple?",answer:"red",scoreValue:200}]},
+                    {catagoryName: "animat", questionList:[{question:"what is the color of banana?",answer:"yellow",scoreValue:300}]}
+                ],
+
                 name: 'Editor Lobby',
+                gameSettingPage : false,
             }
         }
 
-        createNewGame()
-        {
-            let game = new Game();
-            gameList.push(game);
+        createNewGame(){
+            console.log("game");
+            
+            //for循環是循環key
+            let obj={name:"mm",age:12}
+            for (let key in obj) {
+               console.log("key:"+key)
+               console.log("value:"+obj[key])
+            }
+            //數組for循環是循環index 索引
+            for (let index in this.chosenCatagoryList)
+            {        
+                let cate=this.chosenCatagoryList[index];
+                for(let i = 0; i<this.questionNumber; i++)
+                {
+                    let question = new Question();
+                    cate.questionList.push(question);
+                }
+           } 
+            let game = new GameE(this.gameName, this.questionNumber, this.chosenCatagoryList);
+            this.gameList.push(game);
+            this.gameSettingPage = false;            
         }
+
+        gameSetting(GameE){
+            this.gameSettingPage = true;
+        }
+
+        addAnotherCatagory()
+        {
+              console.log("add");
+            let catagory = new Catagory();
+            this.chosenCatagoryList.push(catagory);
+        }
+        catagorySubmit(){
+            console.log("submit");
+            this.catagoryList.push(this.catagoryName);
+            this.gameSettingPage = false;
+        }
+        backToLobby(){
+            this.gameSettingPage = false;
+        }
+        editQuestions(){
+            this.$router.push("/QuestionEditor");
+        }
+        setActive(){
+            
+        }
+
     }
 
     export default new EditorLobbyController('pgQEditorLobby');
@@ -79,9 +162,8 @@ Copyright (c) 2018.Haojun All Rights Reserved.
         height: 78vh;
         width: 80vw;
     }
-    .table{
-        
-        width:50%;
-        text-align: center;
+    
+    .game-item button{
+        margin: 10px;
     }
 </style>

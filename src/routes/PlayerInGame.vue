@@ -15,10 +15,9 @@ VFS VUE Single File Component
 
       <div v-else class="container">
         <pgScoreBoard></pgScoreBoard>
-        <h1> Team1 Player: Echo </h1>
+        <h1> Team1 Player: {{name}}</h1>
         <button class="button">Click Me!</button>
     </div>
-
   </div>
 
 </template>
@@ -27,12 +26,12 @@ import Controller from '@/mixins/controller'
 import pgScoreBoard from '@/components/ScoreBoard.vue'
 
 class PlayerInGameController extends Controller {
-
   constructor(name, subComponentList = []) {
     super(name, subComponentList);
     this.vm = {
       name: '',
-      isSplash:true
+      isSplash:true,
+
     }
   }
 

@@ -11,6 +11,7 @@
 
 
                 <select id="game" name="Game">
+             
                     <option value="">catagoryplaceholder </option>
                 </select>
                 <button>Add new catagory</button>

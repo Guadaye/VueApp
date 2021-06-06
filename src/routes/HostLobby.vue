@@ -8,22 +8,45 @@ Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
 <template>
 
 
- <div>
-       <div v-if="isSplash" class="container">
+ <div class ="container">
+       <div v-if="isSplash" >
             <h1>Choose a game to host</h1>
-            <select id="game" name="Game">
-                <option value=""> </option>
-            </select><br />
-            <button  @click="submit">Start!</button>
+            <form @submit.prevent="submit()" class = "form">
+
+                <select v-model = "chosenCatagoryList" @change="changeTest">
+
+                    <option v-for="game in games" :key="game.gameName" :value="game.gameName"> {{game.gameName}}  </option>                
+                
+                </select><br>
+
+                <input type="submit"  value="Start Hosting!" >
+            </form>
        </div>
 
-        <div v-else class="container">
+        <div v-else >
             <h1>Avaliable players:</h1>
-            <div class="playerList">"Player1, Player2, Player3, Player4"</div>
-               <div class = "teamArea">
-                    <pgTeamPickArea></pgTeamPickArea>
-                    <pgTeamPickArea></pgTeamPickArea>
-                    <button @click="submit">Start!</button>
+            <div class="playerList">"Apple, Watermelon, Banana, Orange"</div>
+                <div class = "teamArea">
+                    <form @submit.prevent ="startGame()"  class="form">
+                        <h1>Team1</h1>
+                            <select id="game" name="Game">
+                                <option value="">Apple </option>
+                            </select>
+                            <select id="game" name="Game">
+                                <option value="">Banana </option>
+                            </select>
+
+                        <h1>Team2</h1>
+                        <select id="game" name="Game">
+                            <option value="">Watermelon </option>
+                        </select>
+                        <select id="game" name="Game">
+                            <option value="">Orange </option>
+                        </select>
+                        <input type="submit"  value="Start Game!" >
+                    </form>
+
+                    
                </div>
         </div>
  </div>
@@ -39,13 +62,36 @@ Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
             super( name, subComponentList );
             this.vm = {
                 name: 'HostLobby',
-                isSplash:true
+                isSplash:true,
+                playerList:["Apple", "Watermelon", "Banana", "Orange"],
+                games:[
+                    {gameName: "game1",
+                    questionNumber: 1,
+                    catagoryList :[{catagoryName: "science", 
+                                    questionList:[{question:"what is the color of apple?",
+                                                    answer:"red",
+                                                    scoreValue:200}
+                                                ]},]}],
+                chosenGameIndex:0,                                
+                teamOne:[],
+                teamTwo:[],
+                chosenCatagoryList:null
             }
         }
 
          submit() {
-
+             
             this.isSplash=false;
+        }
+        changeTest(){
+            //保存数据 跳转
+            console.log("chosenCatagoryList:"+this.chosenCatagoryList)
+        }
+
+        startGame()
+        {
+            console.log("StartGame");
+            this.$router.push("/HostInGame");
         }
     }
 
@@ -55,19 +101,14 @@ Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
 <style scoped>
 /* Local styles for this template */
     .container {
-       display: flex;
-  width: 800px;
-  padding: 10% 25% 0 25%;
-  flex-flow: column wrap;
-  text-align: center;
-  /*background: indianred;*/
-  text-align: center;
-  justify-content: space-around; /*横向轴线*/
-  align-content: flex-start; /*纵向轴线*/
-  color: black;
-
+        width: 1200px;
+        padding: 0 25% 0 25%;
+        /*background: indianred;*/
+        text-align: center;
+        color: black;
+        margin-top:100px;
     }
-        .about {
+    .about {
         margin:2vw;
         border: 1px solid black;
         background-color: lightgray;

@@ -7,10 +7,10 @@
 -->
 <template>
 
-    <section class="component-style">  <!-- Just one main element per template -->
+    <section class="score-board">  <!-- Just one main element per template -->
 
-      <div class="point">Team A: 20 point</div>
-      <div class="point">Team B: 30 point</div>
+      <span>Team A: 20 point</span>
+      <span>Team B: 30 point</span>
 
     </section>
 
@@ -46,10 +46,14 @@
     Add "scoped" attribute to limit CSS to this component only <style scoped>
     styles that are specific to this component only, not sub-children
     */
-    .component-style {
-
+    
+    .score-board{
+        font-weight: bold;
+        margin: 10px;
     }
-
+    .score-board span{
+        margin: 30px;
+    } 
     .component-item {
         flex-grow: inherit;
         flex-shrink: inherit;

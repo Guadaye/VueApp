@@ -10,44 +10,22 @@ Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
 
   <div @click="test" class="container">
 
-<!--    <div class="about">{{ name }} your Vue.js App
-      <pgScoreBoard>sasad</pgScoreBoard>
-      <div class="box"></div>
-    </div>-->
+    <score-board></score-board>
+ 
+    <div   class="questionBoard">   
+                 
+        <div v-for="catagoryIndex in gameConfig.catagoryList" :key="catagoryIndex.catagoryName" class="catagory">
+            <div  class="cate-name">{{catagoryIndex.catagoryName}}</div>
+              <!--  question for循环问题  -->
+            <button v-for="questionIndex in catagoryIndex.questionList" :key="questionIndex.answer" class="question">{{questionIndex.scoreValue}}</button>
 
-    <pg-score-board></pg-score-board>
+        </div>
+       
+    </div>
 
-    <div class="cate-name">President</div>
-    <div class="cate-name">Flower</div>
-    <div class="cate-name">Food</div>
-    <div class="cate-name">Science</div>
-    <div class="question">200</div>
-    <div class="question">200</div>
-    <div class="question">200</div>
-    <div class="question">200</div>
-
-    <div class="question">300</div>
-    <div class="question">300</div>
-    <div class="question">300</div>
-    <div class="question">300</div>
-
-    <div class="question">400</div>
-    <div class="question">400</div>
-    <div class="question">400</div>
-    <div class="question">400</div>
-
-    <div class="question">1000</div>
-    <div class="question">1000</div>
-    <div class="question">1000</div>
-    <div class="question">1000</div>
-
-    <div class="question">1000</div>
-    <div class="question">1000</div>
-    <div class="question">1000</div>
-    <div class="question">1000</div>
-
+    
+  
   </div>
-
 </template>
 <script>
 import Controller from '@/mixins/controller'
@@ -59,9 +37,38 @@ class HostInGameController extends Controller {
     super(name, subComponentList);
     this.vm = {
       name: 'HostInGame',
+      gameConfig:  {
+        gameName: "game1",
+        questionNumber: 2,
+        catagoryList :[
+                        {catagoryName: "science", 
+                        questionList:[{question:"what is the color of apple?",
+                                       answer:"red",
+                                       scoreValue:200},
+                                       {question:"what is the color of apple?",
+                                       answer:"red",
+                                       scoreValue:200}]},
+                       {catagoryName: "anime", 
+                        questionList:[{question:"what is the color of apple?",
+                                       answer:"red",
+                                       scoreValue:200},
+                                       {question:"what is the color of apple?",
+                                       answer:"red",
+                                       scoreValue:200}]},
+                       {catagoryName: "animal", 
+                        questionList:[{question:"what is the color of apple?",
+                                       answer:"red",
+                                       scoreValue:200},
+                                       {question:"what is the color of apple?",
+                                       answer:"red",
+                                       scoreValue:200}]}
+                      ]
     }
   }
-  test(){
+  }
+
+  test()
+  {
     console.log(111)
   }
 }
@@ -70,48 +77,39 @@ export default new HostInGameController('pgHostInGame', {ScoreBoard});
 
 </script>
 <style scoped>
+
 /* Local styles for this template */
 .container {
-  display: flex;
   width: 1200px;
   padding: 0 25% 0 25%;
-  flex-flow: row wrap;
-  text-align: center;
   /*background: indianred;*/
   text-align: center;
-  justify-content: space-between;/*横向轴线*/
-  align-content:flex-start;/*纵向轴线*/
   color: black;
+  margin-top:100px;
+   font-family: 'Montserrat', sans-serif;
 }
-.container div{
-  /*todo 測試*/
-
-
-  line-height: 50px;
+.questionBoard{
+  margin-top: 20px;
+  text-align: center;
 }
-
-.point{
-  border: 1px solid black;
-  margin-top: 30px;
-  width: 45%;
-}
-.cate-name{
-  line-height: 50px;
-  height: 50px;
-  margin-top: 50px;
-  width: 20%;
-  margin-bottom: -20px;
+.catagory{
+  display: inline-block;
+  width: 80px;
+  margin-left: 30px;
 }
 .question{
-  margin-top: 10px;
-  /*width: 10%;*/
+  box-shadow: 0 0 40px 40px #3498db inset, 0 0 0 0 #3498db;
+  color: #fff;
+  width: 100%;
+  height: 50px;
   border: 1px solid black;
-  line-height: 50px;
-  flex-shrink: 0;
-  flex-grow: 0;
-  flex-basis: 20%;
-
+  line-height: 40px;
+  margin-top: 20px;
+  font-weight: 700;
+    border-color: #3498db;
+    
 }
+
 
 .about {
   margin: 2vw;

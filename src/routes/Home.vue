@@ -9,7 +9,11 @@ Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
 
     <section class="home-container">
         <div class="home">
-            <h2>Welcome to your {{ name }}</h2>
+            <h2>Welcome to {{ name }}</h2>
+
+             <button  @click="player">I am a player</button>
+              <button  @click="host">I am the host</button>
+               <button  @click="editor">I am the editor</button>
         </div>
     </section>
 
@@ -27,6 +31,16 @@ Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
             this.props = {
                 name: String,
             }
+        }
+
+        player() {
+            this.$router.push("/PlayerInGame");
+        }
+        host(){
+            this.$router.push("/HostLobby");
+        }
+        editor(){
+            this.$router.push("/EditorLobby");
         }
     }
 

@@ -3,7 +3,6 @@ VFS VUE Single File Component
 
 <pg-navbar></pg-navbar>
 
-Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
 -->
 <template>
 

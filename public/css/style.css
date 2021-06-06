@@ -13,7 +13,7 @@
 }
 
 body {
-    background-color: rgb(194, 193, 193);
+    background-color: rgb(255, 255, 255);
     font-family: 'Maven Pro', Helvetica, sans-serif;
     overflow: hidden;
 }
@@ -321,6 +321,7 @@ li a {
 .buttons {
     justify-content: center;
     align-items: center;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .btn{
@@ -341,22 +342,22 @@ li a {
 
 /* Heading Styles */
 h1 {
-    color: white;
+    color: rgb(24, 24, 24);
 }
 
 h2 {
-    color: white;
+    color: rgb(82, 82, 82);
     font-family: 'Roboto', Helvetica, sans-serif;
     margin: 3px 0px 3px 0px;
 }
 
 h3{ 
-    color: white;
+    color: rgb(97, 97, 97);
     font-family: 'Raleway', Helvetica, sans-serif;
 }
 
 h4{
-    color: white;
+    color: rgb(109, 109, 109);
     font-family: 'Raleway', Helvetica, sans-serif;
 }
 
