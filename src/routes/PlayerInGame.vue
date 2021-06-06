@@ -6,7 +6,7 @@ VFS VUE Single File Component
 <template>
 
 
-  <div>
+
     <div v-if="isSplash" class="container">
       <h2>Your Nickname is?</h2>
       <input v-model="name" placeholder="nickname" type="text">
@@ -18,7 +18,7 @@ VFS VUE Single File Component
         <h1> Team1 Player: {{name}}</h1>
         <button class="button">Click Me!</button>
     </div>
-  </div>
+
 
 </template>
 <script>
@@ -50,17 +50,13 @@ export default new PlayerInGameController('pgPlayerInGame', {pgScoreBoard});
 <style scoped>
 /* Local styles for this template */
 .container {
-
-  display: flex;
-  width: 800px;
-  padding: 10% 25% 0 25%;
-  flex-flow: column wrap;
-  text-align: center;
+  width: 1200px;
+  padding: 0 25% 0 25%;
   /*background: indianred;*/
   text-align: center;
-  justify-content: space-around; /*横向轴线*/
-  align-content: flex-start; /*纵向轴线*/
   color: black;
+  margin-top:100px;
+   font-family: 'Montserrat', sans-serif;
 
 }
 
@@ -69,12 +65,9 @@ export default new PlayerInGameController('pgPlayerInGame', {pgScoreBoard});
 }
 
 .container button {
-
   width: 80px;
   margin: 100px auto;
 }
-
-
 
 .button {
   margin: 20px 20px;

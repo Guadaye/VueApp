@@ -16,7 +16,7 @@ import HostLobby from '@/routes/HostLobby.vue'
 import EditorLobby from '@/routes/EditorLobby.vue'
 import GameSettingEditor from '@/routes/GameSettingEditor.vue'
 import QuestionEditor from '@/routes/QuestionEditor.vue'
-import QuestionPage from '@/routes/QuestionPage.vue'
+
 
 
 export default new Router({
@@ -28,7 +28,6 @@ export default new Router({
         { path:"/HostLobby", name:"HostLobby", component: HostLobby },
         { path:"/GameSettingEditor", name:"GameSettingEditor", component: GameSettingEditor },
         { path:"/QuestionEditor", name:"QuestionEditor", component: QuestionEditor },
-        { path:"/QuestionPage", name:"QuestionPage", component: QuestionPage },
         { path:"/EditorLobby", name:"EditorLobby", component: EditorLobby }
     ]
 });

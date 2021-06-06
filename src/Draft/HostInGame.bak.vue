@@ -71,7 +71,7 @@ class HostInGameController extends Controller {
     super(name, subComponentList);
     this.vm = {
       name: 'HostInGame',
-
+      
     }
   }
   test(){
@@ -85,10 +85,19 @@ export default new HostInGameController('pgHostInGame', {ScoreBoard});
 <style scoped>
 /* Local styles for this template */
 .container {
-  
+  display: flex;
   width: 1200px;
   padding: 0 25% 0 25%;
+  flex-flow: row wrap;
+  text-align: center;
+  /*background: indianred;*/
+  text-align: center;
+  justify-content: space-between;/*横向轴线*/
+  align-content:flex-start;/*纵向轴线*/
   color: black;
+}
+.container div{
+  line-height: 50px;
 }
 
 .point{

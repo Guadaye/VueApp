@@ -6,34 +6,32 @@ VFS VUE Single File Component
 Copyright (c) 2018.Haojun All Rights Reserved.
 -->
 <template>
-
-
-    <section class="container">
         <div v-if="gameSettingPage" class = "container">
 
             <form @submit.prevent = "createNewGame()"  class="form">
-                    <label>Name of your game:</label><br>
+                    <h2>Name of your game:</h2><br>
                     <input type="text"  value="Game1" v-model="gameName"><br>
 
-                    <label>Question numbers for each catagory:</label><br>
+                    <h2>Question numbers for each catagory:</h2><br>
                     <input type="text"  value="4" v-model="questionNumber" ><br>
 
-                    <label>Catagory picked:</label> <button @click="addAnotherCatagory">Add</button>
+                    <h2>Catagory picked:</h2> 
                     <div v-for="item in chosenCatagoryList" :key="item.catagoryName">
 
                         <select v-model ="chosenCatagoryName"><br>
                             <option v-for="catagory in catagoryList"  :key="catagory.catagoryName"> {{catagory.catagoryName}}  </option>    
                         </select><br>
                         
-                    </div>
-
+                    </div><br><br>
                 
                     <input type="submit"  value="Create Game!" >
-  
             </form>
+
+                    <button @click="addAnotherCatagory">Add</button><br> 
         </div>
 
-        <div v-else class="about">{{ name }}
+        <div v-else class="container">{{ name }}
+            <pgbackButton></pgbackButton>
             <h1>Choose a game to edit</h1>
             <div class = "game-list">
                 
@@ -44,11 +42,9 @@ Copyright (c) 2018.Haojun All Rights Reserved.
                         <button @click="setActive">Set Active</button>
                    </div>
                         <button @click="gameSetting()">Create a new game!</button>
-            </div>
-         
+            </div>       
                 <br><br>
                 <br><br>
-
 
                 <form @submit.prevent = "catagorySubmit" class="form">
 
@@ -56,9 +52,7 @@ Copyright (c) 2018.Haojun All Rights Reserved.
                     <input type="text"  v-model="catagoryName" ><br>
                     <input type = "submit" value = "submit">        
                 </form>
-
         </div>
-    </section>
 </template>
 
 
@@ -67,11 +61,13 @@ Copyright (c) 2018.Haojun All Rights Reserved.
     import GameE from '@/model/Game.js'
     import Question from '@/model/Question.js'
     import Catagory from '@/model/Catagory.js'
+    import pgbackButton from '@/components/BackButton.vue'
     class EditorLobbyController extends Controller {
         constructor( name, subComponentList = []) {
             super( name, subComponentList );
             this.vm = {
-
+                questionNumberInTotal:0,
+                gameId:0,
                 currentGame:[],
                 gameList:[],
                 gameName: "",
@@ -104,13 +100,16 @@ Copyright (c) 2018.Haojun All Rights Reserved.
                 let cate=this.chosenCatagoryList[index];
                 for(let i = 0; i<this.questionNumber; i++)
                 {
-                    let question = new Question();
+                    this.questionNumberInTotal++;
+                    let question = new Question(this.questionNumberInTotal);
                     cate.questionList.push(question);
                 }
            } 
-            let game = new GameE(this.gameName, this.questionNumber, this.chosenCatagoryList);
+            this.gameId++;
+            let game = new GameE(this.gameId,this.gameName, this.questionNumber, this.chosenCatagoryList);
             this.gameList.push(game);
-            this.gameSettingPage = false;            
+            this.gameSettingPage = false;    
+                   this.questionNumberInTotal =0 ; 
         }
 
         gameSetting(GameE){
@@ -140,18 +139,20 @@ Copyright (c) 2018.Haojun All Rights Reserved.
 
     }
 
-    export default new EditorLobbyController('pgQEditorLobby');
+    export default new EditorLobbyController('pgQEditorLobby',{pgbackButton});
 
 </script>
 
 <style scoped>
 /* Local styles for this template */
     .container {
-        display: flex;
-        width: 100%;
-        flex-direction:column;
-        flex-flow:row wrap;
-         text-align: center; 
+  width: 1200px;
+  padding: 0 25% 0 25%;
+  /*background: indianred;*/
+  text-align: center;
+  color: black;
+  margin-top:100px;
+   font-family: 'Montserrat', sans-serif;
     }
 
     .about {

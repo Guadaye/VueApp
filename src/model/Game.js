@@ -1,11 +1,12 @@
 export default class GameE{
 
-    constructor( name = "new game" , questionNumber = "4", catagoryList){
-
-        this.name = name;
+    constructor(id, name = "new game" , questionNumber = "4", catagoryList ){
+        this.gameId=id;
+        this.gameName = name;
         this.questionNumber = questionNumber;
         this.catagoryList = catagoryList;
-        this.isActive = false;
+
+        
     }
 
 

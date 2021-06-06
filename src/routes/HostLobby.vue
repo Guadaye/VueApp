@@ -10,6 +10,7 @@ Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
 
  <div class ="container">
        <div v-if="isSplash" >
+                 <pgbackButton></pgbackButton>
             <h1>Choose a game to host</h1>
             <form @submit.prevent="submit()" class = "form">
 
@@ -24,6 +25,7 @@ Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
        </div>
 
         <div v-else >
+            <pgbackButton></pgbackButton>
             <h1>Avaliable players:</h1>
             <div class="playerList">"Apple, Watermelon, Banana, Orange"</div>
                 <div class = "teamArea">
@@ -56,6 +58,7 @@ Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
     import Controller from '@/mixins/controller'
     import pgTeamPickArea from '@/components/TeamPickArea.vue'
     import pgSplashForHost from '@/components/SplashForHost.vue'
+        import pgbackButton from '@/components/BackButton.vue'
     class HostLobbyController extends Controller {
 
         constructor( name, subComponentList = []) {
@@ -95,7 +98,7 @@ Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
         }
     }
 
-    export default new HostLobbyController('pgHostLobby',{pgTeamPickArea,pgSplashForHost});
+    export default new HostLobbyController('pgHostLobby',{pgTeamPickArea,pgSplashForHost,pgbackButton});
 
 </script>
 <style scoped>

@@ -24,11 +24,6 @@ Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
                     <input type="submit" name="action" value="Submit" />
             </form>
 
-
-
-
-
-
         </div>
     </section>
 

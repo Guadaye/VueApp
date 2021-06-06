@@ -35,7 +35,7 @@ VFS VUE Single File Component
                     { section: "GameSettingEditor" },
                     { section: "EditorLobby" },
                     { section: "QuestionEditor" },
-                    { section: "QuestionPage" },
+
     
                 ]
             };
