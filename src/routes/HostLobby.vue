@@ -14,9 +14,9 @@ Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
             <h1>Choose a game to host</h1>
             <form @submit.prevent="submit()" class = "form">
 
-                <select v-model = "chosenCatagoryList" @change="changeTest">
+                <select v-model = "gameIndex" @change="changeTest">
 
-                    <option v-for="game in games" :key="game.gameName" :value="game.gameName"> {{game.gameName}}  </option>                
+                    <option v-for="(game,index) in gameList" :key="game.gameName" :value="index"> {{game.gameName}}  </option>                
                 
                 </select><br>
 
@@ -66,24 +66,20 @@ Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
             this.vm = {
                 name: 'HostLobby',
                 isSplash:true,
-                playerList:["Apple", "Watermelon", "Banana", "Orange"],
-                games:[
-                    {gameName: "game1",
-                    questionNumber: 1,
-                    catagoryList :[{catagoryName: "science", 
-                                    questionList:[{question:"what is the color of apple?",
-                                                    answer:"red",
-                                                    scoreValue:200}
-                                                ]},]}],
+                playerList:["Apple", "Watermelon", "Banana", "Orange"],           
                 chosenGameIndex:0,                                
                 teamOne:[],
                 teamTwo:[],
+                gameIndex:0,
                 chosenCatagoryList:null
             }
+            this.injectGetters(['gameList']);  
+             this.injectActions(['setGame']); 
+
         }
 
          submit() {
-             
+             this.setGame(this.gameIndex);
             this.isSplash=false;
         }
         changeTest(){

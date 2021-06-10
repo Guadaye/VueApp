@@ -1,7 +1,7 @@
 export default class Question{
 
-    constructor(number){
-        this.number = number;
+    constructor(){
+        this.number = null;
         this.question = null;
         this.answer = null;
         this.scoreValue = null; 

@@ -8,10 +8,10 @@ Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
 <template>
 
     <div v-if="inQuestionLobby" class="container">
-        <pgbackButton></pgbackButton>
+      <pgbackButton></pgbackButton>
       <score-board></score-board> 
       <div   class="questionBoard">                    
-          <div v-for="catagoryIndex in gameConfig.catagoryList" :key="catagoryIndex.catagoryName" class="catagory">
+          <div v-for="catagoryIndex in gameList[currentGameIndex].catagoryList" :key="catagoryIndex.catagoryName" class="catagory">
               <div  class="cate-name">{{catagoryIndex.catagoryName}}</div>
               <button @click="goToQuestion(questionIndex.id)" v-for="questionIndex in catagoryIndex.questionList" :key="questionIndex.answer" class="question">{{questionIndex.scoreValue}}</button>
           </div>     
@@ -103,6 +103,9 @@ class HostInGameController extends Controller {
                       ]
       }
     }
+
+                this.injectGetters(['gameList','currentGameIndex']);
+ 
   }
   addPoint(scoreValue,id)
   {

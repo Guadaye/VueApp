@@ -30,11 +30,10 @@ VFS VUE Single File Component
                 navMenu:[
                     { section: "Home" },
                     { section: "PlayerInGame" },
-                    { section: "HostInGame" },
+
                     { section: "HostLobby" },
-                    { section: "GameSettingEditor" },
                     { section: "EditorLobby" },
-                    { section: "QuestionEditor" },
+
 
     
                 ]

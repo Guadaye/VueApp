@@ -26,67 +26,63 @@
 
         constructor( name, subComponentList = []) {
             super( name, subComponentList )
-
-            // the vm date does not exist until the component is created
             this.vm = {
                 someData: "Hello world"
             }
-
-            // props passed in when using this component
-            this.props = {
+            this.props = { // props are passed in when using this component
                 title: String
             }
+
             /*
-            Data from the VUEX use injectGetters.
-            injectActions, injectGetters take an array of names from the vuex
+            Components use the getters with ...mapState('module/sub-module', ['getter-name'])
+            to access the State data
+
+            In the component constructor
+
+                this.computed = {
+                    ...mapState('module/user', ['getName', 'getTeam']),
+                    ...mapState('module/game', ['getId', 'getTeam'])
+                }
+
             */
-            //this.injectGetters([/* List of names in array */]);
-            //this.injectActions(['actionMethod','anotherAction'])
+
         }
 
-        // Local component methods, used in a template they are called whenever it renders
-        doIt( params, $event ) {
-            // A method that does something to the props or viewModel, or global state
-        }
-
-        // Local computed methods, recomputed only when reactive properties change
-        computeDoIt( params ) {
-            this.someData = "has changed";
-        }
-
-        /*
-        Lifecycle hooks, remove any you don't need
-        */
         onBeforeCreate() {
             // after the Vue instance initializes, before instances are created
         }
 
         onCreated() {
-            // initialized, injections and reactivity registered
+            // called when each instance is initialized
         }
 
         onBeforeMount() {
-            // after template compile or innerHTML generated
+            // called before the component is injected into the DOM
         }
 
         onMounted() {
-            //  innerHTML el is attached to parent
+            // called
         }
 
         onBeforeUpdate() {
-            // After data changes and before Virtual DOM is about to change
+
         }
 
         onUpdated() {
-            // After data changes and after the Virtual DOM changes
+
         }
 
-        onBeforeUnmount() {
-            // specifically when unmount is called
+        onBeforeDestroy() {
+
         }
 
-        onUnmounted() {
-            // After el has been unmounted
+        onDestroyed() {
+
+        }
+
+        // your local component methods
+        doIt( event ) {
+            // A method that does something to the props or viewModel, or global state
         }
     }
 

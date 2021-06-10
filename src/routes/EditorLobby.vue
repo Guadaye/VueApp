@@ -8,18 +8,19 @@ Copyright (c) 2018.Haojun All Rights Reserved.
 <template>
         <div v-if="gameSettingPage" class = "container">
 
-            <form @submit.prevent = "createNewGame()"  class="form">
+            <form @submit.prevent = "editGame"  class="form">
                     <h2>Name of your game:</h2><br>
-                    <input type="text"  value="Game1" v-model="gameName"><br>
+                    <input type="text"   v-model="gameList[editGameIndex].gameName"><br>
 
                     <h2>Question numbers for each catagory:</h2><br>
-                    <input type="text"  value="4" v-model="questionNumber" ><br>
+                    <input type="text"   v-model="gameList[editGameIndex].questionNumber" ><br>
 
                     <h2>Catagory picked:</h2> 
-                    <div v-for="item in chosenCatagoryList" :key="item.catagoryName">
+                    <div v-for="(item, index) in gameList[editGameIndex].catagoryList" :key="item.catagoryName">
 
-                        <select v-model ="chosenCatagoryName"><br>
-                            <option v-for="catagory in catagoryList"  :key="catagory.catagoryName"> {{catagory.catagoryName}}  </option>    
+                        <select v-model ="gameList[editGameIndex].catagoryList[index].catagoryName"><br>
+                            <option v-for="(catagory) in catagoryList"  :key="catagory"> {{catagory}}  </option>                    
+
                         </select><br>
                         
                     </div><br><br>
@@ -35,20 +36,20 @@ Copyright (c) 2018.Haojun All Rights Reserved.
             <h1>Choose a game to edit</h1>
             <div class = "game-list">
                 
-                   <div v-for="game in gameList" :key ="game.name" class="game-item">
-                        <span>game1</span>
-                        <button class="" @click="gameSetting(name)">Edit Game Settings</button>
-                        <button @click="editQuestions">Edit Questions</button>
-                        <button @click="setActive">Set Active</button>
+                   <div v-for="(game,index) in gameList" :key ="game.name" class="game-item">
+                        <span>{{game.gameName}}</span>
+                        <button  @click="gameSetting(index)">Edit Game Settings</button>
+                        <button  @click="editQuestions(index)"  >Edit Questions</button>
+                        <button  @click="setActive">Set Active</button>
                    </div>
-                        <button @click="gameSetting()">Create a new game!</button>
+                        <button @click="createEmptyGame()">Create a new game!</button>
             </div>       
                 <br><br>
                 <br><br>
 
                 <form @submit.prevent = "catagorySubmit" class="form">
 
-                    <label>Add a new catagory:</label>
+                    <h2>Add a new catagory:</h2>
                     <input type="text"  v-model="catagoryName" ><br>
                     <input type = "submit" value = "submit">        
                 </form>
@@ -69,62 +70,57 @@ Copyright (c) 2018.Haojun All Rights Reserved.
                 questionNumberInTotal:0,
                 gameId:0,
                 currentGame:[],
-                gameList:[],
                 gameName: "",
                 questionNumber : 4,
-                chosenCatagoryList:[],
-                chosenCatagoryName: "",
+          //      chosenCatagoryList:[],
+           //     chosenCatagoryName: "",
                 catagoryName: "",
-                catagoryList:[
-                    {catagoryName: "science", questionList:[{question:"what is the color of apple?",answer:"red",scoreValue:200}]},
-                    {catagoryName: "animat", questionList:[{question:"what is the color of banana?",answer:"yellow",scoreValue:300}]}
-                ],
-
                 name: 'Editor Lobby',
                 gameSettingPage : false,
+                editGameIndex:0,
+      
             }
-        }
 
-        createNewGame(){
-            console.log("game");
-            
-            //for循環是循環key
-            let obj={name:"mm",age:12}
-            for (let key in obj) {
-               console.log("key:"+key)
-               console.log("value:"+obj[key])
-            }
-            //數組for循環是循環index 索引
-            for (let index in this.chosenCatagoryList)
-            {        
-                let cate=this.chosenCatagoryList[index];
-                for(let i = 0; i<this.questionNumber; i++)
-                {
-                    this.questionNumberInTotal++;
-                    let question = new Question(this.questionNumberInTotal);
-                    cate.questionList.push(question);
-                }
-           } 
-            this.gameId++;
+            this.injectGetters(['gameList','catagoryList']);
+            this.injectActions(['addGame','setGame','addNewCatagory','addQuestion','addCatagory']);
+        }
+        createEmptyGame(){
             let game = new GameE(this.gameId,this.gameName, this.questionNumber, this.chosenCatagoryList);
-            this.gameList.push(game);
-            this.gameSettingPage = false;    
-                   this.questionNumberInTotal =0 ; 
+       //     this.setGame(game);
+            this.addGame(game);
+            this.editGameIndex=this.gameList.length-1;
+             this.gameSettingPage = true;
+             
         }
 
-        gameSetting(GameE){
+
+        editGame(gi){
+              for (let i = 0; i<this.gameList[this.editGameIndex].questionNumber;i++)
+            {        
+                let question = new Question();
+                let gi = this.editGameIndex; 
+                let payload ={question:question,gi:gi}
+                this.addQuestion(payload);
+    
+           } 
+             this.gameSettingPage = false;
+        }
+
+        gameSetting(index){
             this.gameSettingPage = true;
+            this.editGameIndex=index;
         }
 
         addAnotherCatagory()
         {
-              console.log("add");
             let catagory = new Catagory();
-            this.chosenCatagoryList.push(catagory);
+            let gi = this.editGameIndex; 
+            let payload ={catagory:catagory,gi:gi}
+            this.addCatagory(payload);
         }
         catagorySubmit(){
             console.log("submit");
-            this.catagoryList.push(this.catagoryName);
+            this.addNewCatagory(this.catagoryName);
             this.gameSettingPage = false;
         }
         backToLobby(){
