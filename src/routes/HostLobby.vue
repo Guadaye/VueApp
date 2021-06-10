@@ -27,12 +27,14 @@ Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
         <div v-else >
             <pgbackButton></pgbackButton>
             <h1>Avaliable players:</h1>
-            <div class="playerList">"Apple, Watermelon, Banana, Orange"</div>
+            <div v-for="playerName in playerinHostLobbyList" :key ="playerName" class="playerList">{{playerName}}</div>
+
+
                 <div class = "teamArea">
                     <form @submit.prevent ="startGame()"  class="form">
                         <h1>Team1</h1>
                             <select id="game" name="Game">
-                                <option value="">Apple </option>
+                                <option v-for="playerName in playerinHostLobbyList" :key ="playerName" value="">{{playerName}} </option>
                             </select>
                             <select id="game" name="Game">
                                 <option value="">Banana </option>
@@ -40,11 +42,11 @@ Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
 
                         <h1>Team2</h1>
                         <select id="game" name="Game">
-                            <option value="">Watermelon </option>
+                             <option v-for="playerName in playerinHostLobbyList" :key ="playerName" value="">{{playerName}} </option>
                         </select>
                         <select id="game" name="Game">
-                            <option value="">Orange </option>
-                        </select>
+                             <option v-for="playerName in playerinHostLobbyList" :key ="playerName" value="">{{playerName}} </option>
+                        </select><br>
                         <input type="submit"  value="Start Game!" >
                     </form>
 
@@ -73,7 +75,7 @@ Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
                 gameIndex:0,
                 chosenCatagoryList:null
             }
-            this.injectGetters(['gameList']);  
+            this.injectGetters(['gameList','playerinHostLobbyList']);  
              this.injectActions(['setGame']); 
 
         }

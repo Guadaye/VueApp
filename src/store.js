@@ -8,42 +8,50 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-  
-    currentGameIndex:0,  
+    startHosting:false,
+    inQuestionPage:false,
+    currentGameIndex:-1,  
+    currentAnsweringQuestionID:0,
     gameList:[     
     {gameName: "game1",
       questionNumber: 2,
       catagoryList :[
                       {catagoryName: "science", 
                       questionList:[{
-                                    id:1,
+                                    questionID:1,
+                                    answered:false,
                                     question:"what is the color of apple?",
                                     answer:"red",
                                     scoreValue:200},
                                     {
-                                      id:2,
+                                      questionID:2,
                                       question:"what is the color of bababa?",
-                                    answer:"red",
+                                      answered:false,
+                                      answer:"red",
                                     scoreValue:200}]},
                      {catagoryName: "anime", 
                       questionList:[{
-                                      id:3,
+                                      questionID:3,
+                                      answered:false,
                                       question:"what is the color of ccc?",
                                       answer:"red",
                                       scoreValue:200},
                                      {
-                                       id:4,
+                                      questionID:4,
+                                       answered:false,
                                        question:"what is the color of ddd?",
                                        answer:"red",
                                        scoreValue:200}]},
                      {catagoryName: "animal", 
                       questionList:[{
-                                     id:5,
+                                    questionID:5,
+                                     answered:false,
                                      question:"what is the color of rrr?",
                                      answer:"red",
                                      scoreValue:200},
                                      {
-                                      id:6,
+                                      questionID:6,
+                                      answered:false,
                                       question:"what is the color of sss?",
                                       answer:"red",
                                       scoreValue:200}]}
@@ -51,11 +59,45 @@ export default new Vuex.Store({
     }
 
     ],
+    playerinHostLobbyList:["Apple","Banana"],
+    score:[0,0],
+    team1List:[],
+    team2List:[],
     catagoryList:["science","animal","anime"],
+    queueID:0,
+    itsTurn:true,
+    playerBuzzQueue:[
+      {queueID:1,name:"player1",itsTurn:true},
+      {queueID:2,name:"player2",itsTurn:false},
+      {queueID:3,name:"player3",itsTurn:false}
+      ],
+
+    
+
 
     },
     mutations: {
-      SET_CURRENT_GAME:(state, gameIndex)=> state.currentGameIndex = gameIndex,
+
+      FIGHT_ANSWER:(state, playerName)=>{
+        queueID++;
+        if(queueID>1)
+        state.itsTurn=false;
+        let playerInQueue = {queueID:state.queueID, name:playerName,itsTurn:itsTurn}
+        state.playerBuzzQueue.push(playerInQueue)
+      },
+
+
+      SET_CURRENT_GAME:(state, gameIndex)=> {
+        state.currentGameIndex = gameIndex;
+        state.playerinHostLobbyList.splice(0);
+        state.team1List.splice(0);
+        state.team2List.splice(0);
+        state.score =[0,0];
+      },
+      IN_QUESTION:(state,inQuestionPage)=>state.inQuestionPage=inQuestionPage,
+      SET_CURRENT_ANSWERING_QUESTIONID:(state, questionID)=>{
+        state.currentAnsweringQuestionID = questionID
+      },
 
       ADD_GAME:(state, newGame)=>{
         state.gameList.push(newGame)
@@ -78,10 +120,32 @@ export default new Vuex.Store({
         },
 
         ADD_CATAGORY:(state,payload)  =>{
-          console.log(payload);
           state.gameList[payload.gi].catagoryList.push(payload.catagory);
+        } ,
 
-        } 
+        ADD_PLAYER_BUZZ:(state,playerID)=>{
+          state.playerBuzzQueue.push(playerID)
+        },
+        CLEAR_PLAYER_BUZZ_QUEUE:(state)=>{
+          state.playerBuzzQueue.splice(0)
+        },
+
+        SET_ANSWERED:(state)=>{
+          state.gameList[state.currentGameIndex].catagoryList.forEach((cata)=>{
+            cata.questionList.forEach((ques)=>{
+              console.log(ques.questionID+state.currentAnsweringQuestionID);    
+              if(ques.questionID==state.currentAnsweringQuestionID)            
+                ques.answered=true;                                                               
+            })})
+            state.playerBuzzQueue.splice(0);
+            state.queueID=0;
+          },
+         
+        PLAYER_JOIN:(state,playerName)=>{
+          if(state.playerinHostLobbyList.length<4)
+          state.playerinHostLobbyList.push(playerName)
+        },
+
     },
     actions: {
       setGame({commit},gameIndex){
@@ -93,7 +157,7 @@ export default new Vuex.Store({
       },
       
       addQuestion({commit}, payload){
-        console.log(payload);
+
         commit('ADD_QUESTION', payload)
       },
 
@@ -105,15 +169,37 @@ export default new Vuex.Store({
       },
       addCatagory({commit}, payload){
         commit('ADD_CATAGORY', payload)
+      },
+
+      addPlayerBuzz({commit},playerID){
+        commit('ADD_PLAYER_BUZZ',playerID)
+      },
+      clearPlayerBuzz({commit}){
+        commit('CLEAR_PLAYER_BUZZ_QUEUE')
+      },
+      setAnswered({commit}){
+        commit('SET_ANSWERED')
+      },
+      setCurrentAnsweringQuestionID({commit},questionID){
+        commit('SET_CURRENT_ANSWERING_QUESTIONID',questionID)
+      },
+
+      playerJoin({commit},playerName){
+        commit('PLAYER_JOIN',playerName)
+      },
+      fightAnswer({commit},playerName){
+        commit('FIGHT_ANSWER',playerName)
       }
+      
     },
 
     getters:{
       gameList: state=>state.gameList,
-     
+      inQuestionPage:state=>state.inQuestionPage,
       catagoryList:state=>state.catagoryList,
       currentGameIndex:state=>state.currentGameIndex,
-    
+      playerBuzzQueue:state=>state.playerBuzzQueue,
+      playerinHostLobbyList:state=>state.playerinHostLobbyList,
     }
 /*
   modules: {

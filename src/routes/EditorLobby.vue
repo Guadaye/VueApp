@@ -86,10 +86,9 @@ Copyright (c) 2018.Haojun All Rights Reserved.
         }
         createEmptyGame(){
             let game = new GameE(this.gameId,this.gameName, this.questionNumber, this.chosenCatagoryList);
-       //     this.setGame(game);
             this.addGame(game);
             this.editGameIndex=this.gameList.length-1;
-             this.gameSettingPage = true;
+            this.gameSettingPage = true;
              
         }
 

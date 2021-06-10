@@ -13,7 +13,9 @@ Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
       <div   class="questionBoard">                    
           <div v-for="catagoryIndex in gameList[currentGameIndex].catagoryList" :key="catagoryIndex.catagoryName" class="catagory">
               <div  class="cate-name">{{catagoryIndex.catagoryName}}</div>
-              <button @click="goToQuestion(questionIndex.id)" v-for="questionIndex in catagoryIndex.questionList" :key="questionIndex.answer" class="question">{{questionIndex.scoreValue}}</button>
+              <div class="question" v-for="questionIndex in catagoryIndex.questionList " :key="questionIndex.answer">
+              <button v-if="questionIndex.answered ==false" @click="goToQuestion(questionIndex.questionID)"  >{{questionIndex.scoreValue}}</button>
+              </div>
           </div>     
       </div>
     </div>
@@ -21,7 +23,7 @@ Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
 
     <div v-else class = "container">
         <div class = "back">
-            <button @click="backToLobby">back</button>
+            <button @click="backToQuestionBoard">back</button>
         </div>
              <score-board></score-board> 
         <div > {{question}}</div>
@@ -63,52 +65,15 @@ class HostInGameController extends Controller {
       teamConfig:[{name:"team1",score:0,playerid:[1,3]},
                   {name:"team2",score:0,playerid:[2,4]}],
       inQuestionLobby: true,
-      gameConfig:  {
-        gameName: "game1",
-        questionNumber: 2,
-        catagoryList :[
-                        {catagoryName: "science", 
-                        questionList:[{
-                                      id:1,
-                                      question:"what is the color of apple?",
-                                      answer:"red",
-                                      scoreValue:200},
-                                      {
-                                        id:2,
-                                        question:"what is the color of bababa?",
-                                      answer:"red",
-                                      scoreValue:200}]},
-                       {catagoryName: "anime", 
-                        questionList:[{
-                                        id:3,
-                                        question:"what is the color of ccc?",
-                                        answer:"red",
-                                        scoreValue:200},
-                                       {
-                                         id:4,
-                                         question:"what is the color of ddd?",
-                                         answer:"red",
-                                         scoreValue:200}]},
-                       {catagoryName: "animal", 
-                        questionList:[{
-                                       id:5,
-                                       question:"what is the color of rrr?",
-                                       answer:"red",
-                                       scoreValue:200},
-                                       {
-                                        id:6,
-                                        question:"what is the color of sss?",
-                                        answer:"red",
-                                        scoreValue:200}]}
-                      ]
-      }
+     
     }
 
-                this.injectGetters(['gameList','currentGameIndex']);
- 
+      this.injectGetters(['gameList','currentGameIndex','playerBuzzQueue']);
+      this.injectActions(['clearPlayerBuzz','setCurrentAnsweringQuestionID','setAnswered']);
   }
   addPoint(scoreValue,id)
   {
+
       for (let index in this.teamConfig){        
         let team=this.teamConfig[index];  
         for(let players in team.playerid){                
@@ -117,16 +82,18 @@ class HostInGameController extends Controller {
             team.score+=scoreValue;
             if(scoreValue>=0){
               this.inQuestionLobby= true;
+              this.clearPlayerBuzz();
+              this.setAnswered();
               //TODO: GET RID OF BUTTON
             }
             else{
-              for(let pcindex in this.playerConfig){
-                let pcPlayer = this.playerConfig[pcindex];
+              for(let pcindex in this.playerBuzzQueue){
+                let pcPlayer = this.playerBuzzQueue[pcindex];
                 if(pcPlayer.id==id){
-                    console.log(this.playerConfig[pcindex++].itsTurn);
+                    console.log(this.playerBuzzQueue[pcindex++].itsTurn);
                     pcPlayer.itsTurn=false;                  
 
-                    this.playerConfig[pcindex++].itsTurn=true;
+                    this.playerBuzzQueue[pcindex++].itsTurn=true;
                     }
                 }
               }     
@@ -134,13 +101,14 @@ class HostInGameController extends Controller {
           }
         }
       }
-  
 
   goToQuestion(id)
-  {
-      for (let index in this.gameConfig.catagoryList){
+  {   
+      this.setCurrentAnsweringQuestionID(id);
+
+      for (let index in this.gameList[this.currentGameIndex].catagoryList){
         console.log("incatagoryList");
-        let cate=this.gameConfig.catagoryList[index];  
+        let cate=this.gameList[this.currentGameIndex].catagoryList[index];  
         for(let questionIndex in cate.questionList){            
          let question=cate.questionList[questionIndex]; 
           if (question.id == id){
@@ -152,8 +120,10 @@ class HostInGameController extends Controller {
         this.inQuestionLobby = false;   
       }   
   }
-  backToLobby() {
+
+  backToQuestionBoard() {
       this.inQuestionLobby= true;
+      this.setAnswered();
   }
 
 }

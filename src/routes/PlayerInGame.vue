@@ -16,7 +16,7 @@ VFS VUE Single File Component
       <div v-else class="container">
         <pgScoreBoard></pgScoreBoard>
         <h1> Team1 Player: {{name}}</h1>
-        <button class="button">Click Me!</button>
+        <button @click="tapToFightAnswer" class="button">Click Me!</button>
     </div>
 
 
@@ -33,6 +33,8 @@ class PlayerInGameController extends Controller {
       isSplash:true,
 
     }
+      this.injectGetters(['inQuestionPage','currentGameIndex']);
+     this.injectActions(['playerJoin','fightAnswer',]);
   }
 
   submit() {
@@ -40,7 +42,15 @@ class PlayerInGameController extends Controller {
       alert("please input name")
       return;
     }
+    this.playerJoin(this.name);
     this.isSplash=false;
+  }
+
+  tapToFightAnswer(){
+    if(this.inQuestionPage)
+    {
+        this.fightAnswer(this.name);
+    }
   }
 }
 
