@@ -16,6 +16,7 @@ import HostLobby from '@/routes/HostLobby.vue'
 import EditorLobby from '@/routes/EditorLobby.vue'
 import GameSettingEditor from '@/routes/GameSettingEditor.vue'
 import QuestionEditor from '@/routes/QuestionEditor.vue'
+import BigScreen from '@/routes/BigScreen.vue'
 
 
 
@@ -28,6 +29,7 @@ export default new Router({
         { path:"/HostLobby", name:"HostLobby", component: HostLobby },
         { path:"/GameSettingEditor", name:"GameSettingEditor", component: GameSettingEditor },
         { path:"/QuestionEditor", name:"QuestionEditor", component: QuestionEditor },
-        { path:"/EditorLobby", name:"EditorLobby", component: EditorLobby }
+        { path:"/EditorLobby", name:"EditorLobby", component: EditorLobby },
+        { path:"/BigScreen", name:"BigScreen", component: BigScreen }
     ]
 });

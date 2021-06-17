@@ -7,13 +7,27 @@ Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
 -->
 <template>
 
-    <div v-if="inQuestionPage" class = "container">
+    <div v-if="inQuestionLobby" class="container">
+      <pgbackButton></pgbackButton>
+      <score-board></score-board> 
+      <div   class="questionBoard">                    
+          <div v-for="catagoryIndex in gameList[currentGameIndex].catagoryList" :key="catagoryIndex.catagoryName" class="catagory">
+              <div  class="cate-name">{{catagoryIndex.catagoryName}}</div>
+              <div class="question" v-for="questionIndex in catagoryIndex.questionList " :key="questionIndex.answer">
+              <button class="questionBtn" v-if="questionIndex.answered ==false" @click="goToQuestion(questionIndex.questionID)"  >{{questionIndex.scoreValue}}</button>
+              </div>
+          </div>     
+      </div>
+    </div>
+
+
+    <div v-else class = "container">
         <div class = "back">
             <button @click="backToQuestionBoard">back</button>
         </div>
              <score-board> </score-board> 
         <div > {{question}}</div>
-        <div > {{answer}}</div>
+ 
 
 
         <div class="playerBoard">
@@ -25,22 +39,6 @@ Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
         </div>
     </div>
 
-    <div v-else class="container">
-      <pgbackButton></pgbackButton>
-      <score-board></score-board> 
-      <div   class="questionBoard">                    
-          <div v-for="catagoryIndex in gameList[currentGameIndex].catagoryList" :key="catagoryIndex.catagoryName" class="catagory">
-              <div  class="cate-name">{{catagoryIndex.catagoryName}}</div>
-              <div class="question" v-for="questionIndex in catagoryIndex.questionList " :key="questionIndex.answer">
-              <button v-if="questionIndex.answered ==false" @click="goToQuestion(questionIndex.questionID)"  >{{questionIndex.scoreValue}}</button>
-              </div>
-          </div>     
-      </div>
-    </div>
-
-
-
-
 
 </template>
 
@@ -49,7 +47,7 @@ Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
 import Controller from '@/mixins/controller'
 import ScoreBoard from '@/components/ScoreBoard.vue'
 import pgbackButton from '@/components/BackButton.vue'
-class HostInGameController extends Controller {
+class BigScreenController extends Controller {
 
   constructor(name, subComponentList = []) {
     super(name, subComponentList);
@@ -64,8 +62,8 @@ class HostInGameController extends Controller {
      
     }
 
-      this.injectGetters(['gameList','currentGameIndex','playerBuzzQueue','teamConfig','inQuestionPage']);
-      this.injectActions(['clearPlayerBuzz','setCurrentAnsweringQuestionID','setAnswered','inQuestion']);
+      this.injectGetters(['gameList','currentGameIndex','playerBuzzQueue','teamConfig']);
+      this.injectActions(['clearPlayerBuzz','setCurrentAnsweringQuestionID','setAnswered']);
   }
   addPoint(scoreValue,id)
   {
@@ -77,7 +75,7 @@ class HostInGameController extends Controller {
           if (player == id){
             team.score+=scoreValue;
             if(scoreValue>=0){
-                 this.inQuestion(false);   
+              this.inQuestionLobby= true;
               this.clearPlayerBuzz();
               this.setAnswered();   
             }
@@ -112,19 +110,18 @@ class HostInGameController extends Controller {
             this.scoreValue = question.scoreValue;
           }       
         }
-
+        this.inQuestionLobby = false;   
       }   
-              this.inQuestion(true);   
   }
 
   backToQuestionBoard() {
-    this.inQuestion(false);   
+      this.inQuestionLobby= true;
       this.setAnswered();
   }
 
 }
 
-export default new HostInGameController('pgHostInGame', {ScoreBoard,pgbackButton});
+export default new BigScreenController('BigScreen', {ScoreBoard,pgbackButton});
 
 </script>
 <style scoped>
@@ -135,7 +132,7 @@ export default new HostInGameController('pgHostInGame', {ScoreBoard,pgbackButton
   padding: 0 25% 0 25%;
   /*background: indianred;*/
   text-align: center;
-  color:white;
+
   margin-top:100px;
    font-family: 'Montserrat', sans-serif;
 }
@@ -149,7 +146,7 @@ export default new HostInGameController('pgHostInGame', {ScoreBoard,pgbackButton
   margin-left: 30px;
 }
 .question{
-  box-shadow: 0 0 40px 40px #3498db inset, 0 0 0 0 #3498db;
+ 
   color: #fff;
   width: 100%;
   height: 50px;
@@ -157,7 +154,7 @@ export default new HostInGameController('pgHostInGame', {ScoreBoard,pgbackButton
   line-height: 40px;
   margin-top: 20px;
   font-weight: 700;
-    border-color: #3498db;
+
     
 }
 .back{
@@ -171,5 +168,9 @@ export default new HostInGameController('pgHostInGame', {ScoreBoard,pgbackButton
   color: black;
   height: 78vh;
   width: 80vw;
+}
+.questionBtn{
+  width:100%;
+  height:50px
 }
 </style>

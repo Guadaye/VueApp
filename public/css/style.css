@@ -8,14 +8,15 @@
 
 /* DEFAULTS */
 * {
-    margin: 0;
+    margin: 2px;
     padding: 0;
 }
 
 body {
-    background-color: rgb(255, 255, 255);
+    background-color: #53488d;
     font-family: 'Maven Pro', Helvetica, sans-serif;
     overflow: hidden;
+    color: white;
 }
 
 input[type=button] {
@@ -30,13 +31,17 @@ input[type=button] {
 
 input[type=button]:hover {
     background-color: gray;
+    border-radius: 7px;
 }
 
 input[type=button]:focus {
     background-color: #D10034;
     border: 1px solid black;
+    border-radius: 7px;
 }
-
+.span{
+    color: white;
+}
 /* GRID FRAME/CONTAINER (PARENT) */
 .grid-frame {
     display: grid;
@@ -223,6 +228,7 @@ li a {
     overflow-y: scroll;
     justify-content: space-evenly;
     background: #FFFFFF;
+    color:white;
 }
 .content-intro {
     font-weight:bold; 
@@ -322,6 +328,7 @@ li a {
     justify-content: center;
     align-items: center;
     font-family: 'Montserrat', sans-serif;
+    color:#D10034;
 }
 
 .btn{
@@ -342,22 +349,23 @@ li a {
 
 /* Heading Styles */
 h1 {
-    color: rgb(24, 24, 24);
+    color: rgb(255, 255, 255);
+    font-family: "DM Sans", sans-serif;
 }
 
 h2 {
-    color: rgb(82, 82, 82);
-    font-family: 'Roboto', Helvetica, sans-serif;
+    color: rgb(255, 255, 255);
+    font-family: "DM Sans", sans-serif;
     margin: 3px 0px 3px 0px;
 }
 
 h3{ 
-    color: rgb(97, 97, 97);
-    font-family: 'Raleway', Helvetica, sans-serif;
+    color: rgb(255, 255, 255);
+    font-family: "DM Sans", sans-serif;
 }
 
 h4{
-    color: rgb(109, 109, 109);
+    color: rgb(255, 255, 255);
     font-family: 'Raleway', Helvetica, sans-serif;
 }
 

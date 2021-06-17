@@ -9,8 +9,8 @@
 
     <section class="score-board">  <!-- Just one main element per template -->
 
-      <span>Team A: 20 point</span>
-      <span>Team B: 30 point</span>
+      <span>Team A: {{teamConfig[0].score}} point</span>
+      <span>Team B: {{teamConfig[1].score}} point</span>
 
     </section>
 
@@ -25,17 +25,18 @@
         constructor( name, subComponentList = []) {
             super( name, subComponentList )
             this.vm = {
-                someData: "Hello world"
+                someData: "Hello world",
+
+    
             }
             this.props = { // props are passed in when using this component
-                title: String
+                teamAScore:0,
+                teamBScore:0,
             }
+                  this.injectGetters(['teamConfig']);
         }
 
-        // your local component methods
-        doIt( event ) {
-            // A method that does something to the props or viewModel, or global state
-        }
+
     }
 
     export default new ScordBoardController('pgGScordBoard'/* , { subComponent, anotherComponent } */);

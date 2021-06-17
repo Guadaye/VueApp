@@ -8,7 +8,7 @@ Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
 <template>
 
     <section class="home-container">
-        <div class="home">
+        <div >
             <h2>Welcome to {{ name }}</h2>
 
              <button  @click="player">I am a player</button>
@@ -64,9 +64,10 @@ Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
     }
 
     select, input, button {
-        font-size: 1.2em;
-        font-weight: 700;
+        font-size: 1em;
+        font-weight: 300;
         height: 1.4em;
+        width: 20em;
     }
 
     button {

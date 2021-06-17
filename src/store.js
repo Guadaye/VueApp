@@ -55,14 +55,16 @@ export default new Vuex.Store({
                                       question:"what is the color of sss?",
                                       answer:"red",
                                       scoreValue:200}]}
-                    ]
-    }
-
+                    ]}
     ],
     playerinHostLobbyList:["Apple","Banana"],
     score:[0,0],
     team1List:[],
     team2List:[],
+
+    teamConfig:[
+      {name:"team1",score:0,playerid:[1,3]},
+      {name:"team2",score:0,playerid:[2,4]}],
     catagoryList:["science","animal","anime"],
     queueID:0,
     itsTurn:true,
@@ -94,7 +96,7 @@ export default new Vuex.Store({
         state.team2List.splice(0);
         state.score =[0,0];
       },
-      IN_QUESTION:(state,inQuestionPage)=>state.inQuestionPage=inQuestionPage,
+      IN_QUESTION:(state,inQuestion)=>state.inQuestionPage=inQuestion,
       SET_CURRENT_ANSWERING_QUESTIONID:(state, questionID)=>{
         state.currentAnsweringQuestionID = questionID
       },
@@ -189,6 +191,9 @@ export default new Vuex.Store({
       },
       fightAnswer({commit},playerName){
         commit('FIGHT_ANSWER',playerName)
+      },
+      inQuestion({commit},inQuestion){
+        commit('IN_QUESTION',inQuestion)
       }
       
     },
@@ -200,6 +205,7 @@ export default new Vuex.Store({
       currentGameIndex:state=>state.currentGameIndex,
       playerBuzzQueue:state=>state.playerBuzzQueue,
       playerinHostLobbyList:state=>state.playerinHostLobbyList,
+      teamConfig:state=>state.teamConfig,
     }
 /*
   modules: {

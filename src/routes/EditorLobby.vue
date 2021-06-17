@@ -9,13 +9,13 @@ Copyright (c) 2018.Haojun All Rights Reserved.
         <div v-if="gameSettingPage" class = "container">
 
             <form @submit.prevent = "editGame"  class="form">
-                    <h2>Name of your game:</h2><br>
+                    <h3>Name of your game:</h3><br>
                     <input type="text"   v-model="gameList[editGameIndex].gameName"><br>
 
-                    <h2>Question numbers for each catagory:</h2><br>
+                    <h3>Question numbers for each catagory:</h3><br>
                     <input type="text"   v-model="gameList[editGameIndex].questionNumber" ><br>
 
-                    <h2>Catagory picked:</h2> 
+                    <h3>Catagory picked:</h3> 
                     <div v-for="(item, index) in gameList[editGameIndex].catagoryList" :key="item.catagoryName">
 
                         <select v-model ="gameList[editGameIndex].catagoryList[index].catagoryName"><br>
@@ -42,14 +42,14 @@ Copyright (c) 2018.Haojun All Rights Reserved.
                         <button  @click="editQuestions(index)"  >Edit Questions</button>
                         <button  @click="setActive">Set Active</button>
                    </div>
-                        <button @click="createEmptyGame()">Create a new game!</button>
+                        <button class = "createBtn" @click="createEmptyGame()">Create a new game!</button>
             </div>       
                 <br><br>
                 <br><br>
 
                 <form @submit.prevent = "catagorySubmit" class="form">
 
-                    <h2>Add a new catagory:</h2>
+                    <h3>Or...Add a new catagory:</h3>
                     <input type="text"  v-model="catagoryName" ><br>
                     <input type = "submit" value = "submit">        
                 </form>
@@ -99,8 +99,7 @@ Copyright (c) 2018.Haojun All Rights Reserved.
                 let question = new Question();
                 let gi = this.editGameIndex; 
                 let payload ={question:question,gi:gi}
-                this.addQuestion(payload);
-    
+                this.addQuestion(payload);    
            } 
              this.gameSettingPage = false;
         }
@@ -142,12 +141,13 @@ Copyright (c) 2018.Haojun All Rights Reserved.
 /* Local styles for this template */
     .container {
   width: 1200px;
-  padding: 0 25% 0 25%;
+  padding: 10px 25% 10px 25%;
   /*background: indianred;*/
   text-align: center;
-  color: black;
+
   margin-top:100px;
    font-family: 'Montserrat', sans-serif;
+   
     }
 
     .about {
@@ -159,7 +159,8 @@ Copyright (c) 2018.Haojun All Rights Reserved.
         width: 80vw;
     }
     
-    .game-item button{
-        margin: 10px;
+    .createBtn{
+        background-color: ghostwhite;
+        
     }
 </style>

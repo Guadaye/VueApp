@@ -82,6 +82,8 @@ Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
 
          submit() {
              this.setGame(this.gameIndex);
+
+             
             this.isSplash=false;
         }
         changeTest(){

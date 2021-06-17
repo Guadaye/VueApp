@@ -54,7 +54,7 @@ body, html {
     background: #242527;
     border: none;
     color: #fff;
-    font-family: Helvetica, Arial, sans-serif;
+    font-family: "DM Sans", sans-serif;
     height: 100%;
     margin: 0;
     padding: 0;
@@ -73,6 +73,9 @@ button {
     font-weight: 700;
     /* min-width:  20em; */
     padding: 0.5em;
+    border-radius: 10px;
+    background-color: #ffe5e5;
+    color: #53488d;
 }
 
 form {
@@ -189,6 +192,7 @@ input {height: 1.4em;font-weight:  700;font-size: 1.2em;}
         /* should live withing a flex box */
         /* width: 10%; */
         flex-grow: 1;
+        margin: 0px;
     }
 
     .uiview-item {

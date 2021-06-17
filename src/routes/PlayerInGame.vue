@@ -42,8 +42,13 @@ class PlayerInGameController extends Controller {
       alert("please input name")
       return;
     }
+    if(this.currentGameIndex>=0)
+    {
     this.playerJoin(this.name);
     this.isSplash=false;
+    }
+    else
+         alert("game hasn't started yet")
   }
 
   tapToFightAnswer(){
