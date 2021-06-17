@@ -31,10 +31,10 @@ Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
 
 
         <div class="playerBoard">
-            <div v-for="player in playerConfig" :key = "player.name">
+            <div v-for="player in playerBuzzQueue" :key = "player.name">
               <span>{{player.name}}</span>
-              <button v-if="player.itsTurn" @click="addPoint(scoreValue, player.id)">Add Point</button>
-              <button v-if="player.itsTurn" @click="addPoint(-scoreValue,player.id)">Deduct Point</button>
+              <button v-if="player.itsTurn" @click="addPoint(scoreValue, player.queueID)">Add Point</button>
+              <button v-if="player.itsTurn" @click="addPoint(-scoreValue,player.queueID)">Deduct Point</button>
             </div>
         </div>
     </div>
@@ -84,12 +84,12 @@ class HostInGameController extends Controller {
               this.inQuestionLobby= true;
               this.clearPlayerBuzz();
               this.setAnswered();
-              //TODO: GET RID OF BUTTON
+    
             }
             else{
               for(let pcindex in this.playerBuzzQueue){
                 let pcPlayer = this.playerBuzzQueue[pcindex];
-                if(pcPlayer.id==id){
+                if(pcPlayer.queueID==id){
                     console.log(this.playerBuzzQueue[pcindex++].itsTurn);
                     pcPlayer.itsTurn=false;                  
 
@@ -111,7 +111,7 @@ class HostInGameController extends Controller {
         let cate=this.gameList[this.currentGameIndex].catagoryList[index];  
         for(let questionIndex in cate.questionList){            
          let question=cate.questionList[questionIndex]; 
-          if (question.id == id){
+          if (question.questionID == id){
             this.question = question.question;
             this.answer = question.answer;
             this.scoreValue = question.scoreValue;
