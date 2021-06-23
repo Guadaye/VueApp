@@ -413,3 +413,7 @@ h4{
 .default_thumbnail {
     background-image: url( "../assets/default_thumbnail.png" );
 }
+.normal-button{
+    width: auto;
+    height: 50px;
+}

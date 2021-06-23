@@ -8,7 +8,7 @@ Copyright (c) 2018.Haojun All Rights Reserved.
 <template>
         <div v-if="gameSettingPage" class = "container">
 
-            <form @submit.prevent = "editGame"  class="form">
+             
                     <h3>Name of your game:</h3><br>
                     <input type="text"   v-model="gameList[editGameIndex].gameName"><br>
 
@@ -24,11 +24,12 @@ Copyright (c) 2018.Haojun All Rights Reserved.
                         </select><br>
                         
                     </div><br><br>
-                
-                    <input type="submit"  value="Create Game!" >
-            </form>
+                             <button @click="addAnotherCatagory">Add</button><br> 
+                    <input class="normal-button" type="submit" @click="editGame" value="Create Game!" >
+        
+         
 
-                    <button @click="addAnotherCatagory">Add</button><br> 
+                   
         </div>
 
         <div v-else class="container">{{ name }}

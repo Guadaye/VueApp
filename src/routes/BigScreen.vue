@@ -1,10 +1,4 @@
-<!--
-VFS VUE Single File Component
 
-<pg-about name="User"></pg-about>
-
-Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
--->
 <template>
 
     <div v-if="inQuestionLobby" class="container">

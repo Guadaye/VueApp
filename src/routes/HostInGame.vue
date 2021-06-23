@@ -1,10 +1,4 @@
-<!--
-VFS VUE Single File Component
 
-<pg-about name="User"></pg-about>
-
-Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
--->
 <template>
 
     <div v-if="inQuestionPage" class = "container">
@@ -32,7 +26,7 @@ Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
           <div v-for="catagoryIndex in gameList[currentGameIndex].catagoryList" :key="catagoryIndex.catagoryName" class="catagory">
               <div  class="cate-name">{{catagoryIndex.catagoryName}}</div>
               <div  v-for="questionIndex in catagoryIndex.questionList " :key="questionIndex.answer">
-              <button class="question" v-if="questionIndex.answered ==false" @click="goToQuestion(questionIndex.questionID)"  >{{questionIndex.scoreValue}}</button>
+              <button class="question"  :class="questionIndex.answered ==true?'invisible':''"  @click="goToQuestion(questionIndex.questionID)"  >{{questionIndex.scoreValue}}</button>
               </div>
           </div>     
       </div>
@@ -54,8 +48,7 @@ class HostInGameController extends Controller {
       id:null,
       question:"",
       answer:"",
-      scoreValue:null,
-     
+      scoreValue:null,     
       inQuestionLobby: true,
      
     }
@@ -154,8 +147,7 @@ export default new HostInGameController('pgHostInGame', {ScoreBoard,pgbackButton
   line-height: 40px;
   margin-top: 10px;
   font-weight: 700;
-    border-color: #3498db;
-    
+    border-color: #3498db;    
 }
 .back{
   text-align:left;
@@ -168,5 +160,17 @@ export default new HostInGameController('pgHostInGame', {ScoreBoard,pgbackButton
   color: black;
   height: 78vh;
   width: 80vw;
+}
+.invisible{
+   visibility: hidden;
+}
+    .normal-button{
+    width: auto;
+    height: 50px;
+    border-radius: 7px;
+    background-color: #21aa56;
+        font-weight: 700;
+            padding: 0.5em;
+    color: #53488d;
 }
 </style>

@@ -1,11 +1,5 @@
-<!--
-VFS VUE Single File Component
 
-<pg-about name="User"></pg-about>
--->
 <template>
-
-
 
     <div v-if="isSplash" class="container">
       <h2>Your Nickname is?</h2>

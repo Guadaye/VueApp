@@ -275,4 +275,13 @@
         text-align: center;
         color: #2c3e50;
     }
+    .normal-button{
+    width: auto;
+    height: 50px;
+    border-radius: 7px;
+    background-color: #21aa56;
+        font-weight: 700;
+            padding: 0.5em;
+    color: #53488d;
+}
 </style>
