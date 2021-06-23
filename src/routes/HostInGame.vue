@@ -31,16 +31,12 @@ Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
       <div   class="questionBoard">                    
           <div v-for="catagoryIndex in gameList[currentGameIndex].catagoryList" :key="catagoryIndex.catagoryName" class="catagory">
               <div  class="cate-name">{{catagoryIndex.catagoryName}}</div>
-              <div class="question" v-for="questionIndex in catagoryIndex.questionList " :key="questionIndex.answer">
-              <button v-if="questionIndex.answered ==false" @click="goToQuestion(questionIndex.questionID)"  >{{questionIndex.scoreValue}}</button>
+              <div  v-for="questionIndex in catagoryIndex.questionList " :key="questionIndex.answer">
+              <button class="question" v-if="questionIndex.answered ==false" @click="goToQuestion(questionIndex.questionID)"  >{{questionIndex.scoreValue}}</button>
               </div>
           </div>     
       </div>
     </div>
-
-
-
-
 
 </template>
 
@@ -130,6 +126,7 @@ export default new HostInGameController('pgHostInGame', {ScoreBoard,pgbackButton
 <style scoped>
 
 /* Local styles for this template */
+
 .container {
   width: 1200px;
   padding: 0 25% 0 25%;
@@ -152,10 +149,10 @@ export default new HostInGameController('pgHostInGame', {ScoreBoard,pgbackButton
   box-shadow: 0 0 40px 40px #3498db inset, 0 0 0 0 #3498db;
   color: #fff;
   width: 100%;
-  height: 50px;
+  height: 60px;
   border: 1px solid black;
   line-height: 40px;
-  margin-top: 20px;
+  margin-top: 10px;
   font-weight: 700;
     border-color: #3498db;
     

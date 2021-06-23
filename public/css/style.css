@@ -20,7 +20,7 @@ body {
 }
 
 input[type=button] {
-    background-color: black;
+    background-color: rgb(157, 72, 255);
     color: white;
     font-family: 'Maven Pro', Helvetica, sans-serif;
     font-size: 17px;

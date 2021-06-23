@@ -35,7 +35,7 @@ img { max-width: 100%; display: block; }
 article > * + * { margin-top: 1em; }
 
 /* Inherit fonts for inputs and buttons */
-input, button, textarea, select { font: inherit; }
+input, button, textarea, select { font: inherit; background-color: rgb(157, 72, 255);}
 
 /* Remove all animations and transitions for people that prefer not to see them */
 @media (prefers-reduced-motion: reduce) {
@@ -82,7 +82,8 @@ form {
     color: white;
     /* font-size: 150%; */
 }
-input {height: 1.4em;font-weight:  700;font-size: 1.2em;}
+input {height: 1.4em;font-weight:  700;font-size: 1.2em;
+    background-color: rgb(157, 72, 255);}
 
 .debug {
     border:1px dashed red;

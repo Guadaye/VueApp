@@ -9,7 +9,7 @@ Copyright (c) 2018.Haojun All Rights Reserved.
 
 
     <section class="container">
-
+     <pgbackButton></pgbackButton>
         <div class="about">{{ name }}
 
             <h1>{{gameConfig.gameName}}</h1>
@@ -41,7 +41,7 @@ Copyright (c) 2018.Haojun All Rights Reserved.
 </template>
 <script>
     import Controller from '@/mixins/controller'
-
+ import pgbackButton from '@/components/BackButton.vue'
     class EditorLobbyController extends Controller {
 
         constructor( name, subComponentList = []) {
@@ -91,16 +91,10 @@ Copyright (c) 2018.Haojun All Rights Reserved.
                                         question:"what is the color of sss?",
                                         answer:"red",
                                         scoreValue:200}]}
-                      ]}
-
-
+                      ]
+                      }
             }
-
-
         }
-
-
-
             preNextQuestion(page)
             {
                 if(page<0){//去上一题
@@ -130,7 +124,7 @@ Copyright (c) 2018.Haojun All Rights Reserved.
 
     }
 
-    export default new EditorLobbyController('pgQEditorLobby');
+    export default new EditorLobbyController('pgQEditorLobby',{pgbackButton});
 
 </script>
 <style scoped>
@@ -145,8 +139,6 @@ Copyright (c) 2018.Haojun All Rights Reserved.
 
     .about {
         margin:2vw;
-        border: 1px solid black;
-        background-color: lightgray;
         color: black;
         height: 78vh;
         width: 80vw;
