@@ -14,7 +14,7 @@
                 
                 </select><br>
 
-                <input type="submit"  value="Start Hosting!" >
+                <input class="normal-button" type="submit"  value="Start Hosting!" >
             </form>
        </div>
 

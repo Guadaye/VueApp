@@ -9,7 +9,7 @@ Copyright (c) 2018.Haojun All Rights Reserved.
 
 
     <section class="container">
-     <pgbackButton></pgbackButton>
+
         <div class="about">{{ name }}
 
             <h1>{{gameConfig.gameName}}</h1>
@@ -26,7 +26,7 @@ Copyright (c) 2018.Haojun All Rights Reserved.
             QuestionValue:<br>
             <input type="text"   v-model="gameConfig.catagoryList[catagoryListIndex].questionList[questionListIndex].scoreValue"><br>
 
-            <input type="submit"  value="Submit" >
+            <input class="normal-button" type="submit"  value="Submit" >
                     
           </form>
 

@@ -25,11 +25,7 @@ Copyright (c) 2018.Haojun All Rights Reserved.
                         
                     </div><br><br>
                              <button @click="addAnotherCatagory">Add</button><br> 
-                    <input class="normal-button" type="submit" @click="editGame" value="Create Game!" >
-        
-         
-
-                   
+                    <input class="normal-button" type="submit" @click="editGame" value="Create Game!" >                          
         </div>
 
         <div v-else class="container">{{ name }}
@@ -52,7 +48,7 @@ Copyright (c) 2018.Haojun All Rights Reserved.
 
                     <h3>Or...Add a new catagory:</h3>
                     <input type="text"  v-model="catagoryName" ><br>
-                    <input type = "submit" value = "submit">        
+                    <input class="normal-button" type = "submit" value = "submit">        
                 </form>
         </div>
 </template>
