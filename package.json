@@ -1,14 +1,21 @@
 {
-  "name": "risk-vue",
+  "name": "jeapordy-vue",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve --port 4000",
+    "client": "vue-cli-service serve --port 4000",
+    "server": "nodemon server/server.js",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "core-js": "^3.12.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "fs": "^0.0.1-security",
+    "http": "^0.0.1-security",
+    "path": "^0.12.7",
     "register-service-worker": "^1.7.2",
     "view-design": "^4.0.0",
     "vue": "^2.6.12",

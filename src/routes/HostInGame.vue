@@ -9,7 +9,6 @@
         <div > {{question}}</div>
         <div > {{answer}}</div>
 
-
         <div class="playerBoard">
             <div v-for="player in playerBuzzQueue" :key = "player.name">
               <span>{{player.name}}</span>

@@ -28,7 +28,7 @@ class PlayerInGameController extends Controller {
 
     }
       this.injectGetters(['inQuestionPage','currentGameIndex']);
-     this.injectActions(['playerJoin','fightAnswer',]);
+     this.injectActions(['playerJoin','fightAnswer','connect']);
   }
 
   submit() {
@@ -40,9 +40,11 @@ class PlayerInGameController extends Controller {
     {
     this.playerJoin(this.name);
     this.isSplash=false;
+    
     }
     else
-         alert("game hasn't started yet")
+         alert("game hasn't started yet");
+        this.connect();
   }
 
   tapToFightAnswer(){

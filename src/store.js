@@ -3,8 +3,10 @@ import Vuex from 'vuex'
 import GameE from '@/model/Game.js'
 import Question from '@/model/Question.js'
 import Catagory from '@/model/Catagory.js'
+import Axios from 'axios'
 
-Vue.use(Vuex)
+Vue.use(Vuex,Axios)
+Axios.defaults.basURL= 'http://localhost:3000'
 
 export default new Vuex.Store({
   state: {
@@ -73,10 +75,6 @@ export default new Vuex.Store({
       {queueID:2,name:"player2",itsTurn:false},
       {queueID:3,name:"player3",itsTurn:false}
       ],
-
-    
-
-
     },
     mutations: {
 
@@ -88,7 +86,6 @@ export default new Vuex.Store({
         state.playerBuzzQueue.push(playerInQueue)
       },
 
-
       SET_CURRENT_GAME:(state, gameIndex)=> {
         state.currentGameIndex = gameIndex;
         state.playerinHostLobbyList.splice(0);
@@ -96,7 +93,9 @@ export default new Vuex.Store({
         state.team2List.splice(0);
         state.score =[0,0];
       },
+
       IN_QUESTION:(state,inQuestion)=>state.inQuestionPage=inQuestion,
+
       SET_CURRENT_ANSWERING_QUESTIONID:(state, questionID)=>{
         state.currentAnsweringQuestionID = questionID
       },
@@ -108,6 +107,7 @@ export default new Vuex.Store({
       ADD_NEW_CATAGORY:(state,newCatagoryName)=>{
         state.catagoryList.push( newCatagoryName)
       },
+
       UPDATE_GAME:(state,updatedGame)=>{
         state.gameList[index]=updatedGame        
       },
@@ -128,6 +128,7 @@ export default new Vuex.Store({
         ADD_PLAYER_BUZZ:(state,playerID)=>{
           state.playerBuzzQueue.push(playerID)
         },
+
         CLEAR_PLAYER_BUZZ_QUEUE:(state)=>{
           state.playerBuzzQueue.splice(0)
         },
@@ -148,8 +149,20 @@ export default new Vuex.Store({
           state.playerinHostLobbyList.push(playerName)
         },
 
+        USER_CONNECTED:(state)=>{
+          console.log("store shows "+data)
+        },
     },
     actions: {
+      connect({commit}){
+        console.log("store shows ");
+          Axios.post('/api/player/connect', this.state.currentGameIndex)
+          .then(response =>response.data)
+    //      .then(data=> console.log("store shows "+data))
+          .then(data => commit('USER_CONNECTED',data.payload))
+          .catch(error=>console.log(error))
+      },
+
       setGame({commit},gameIndex){
         commit('SET_CURRENT_GAME', gameIndex)
       },
@@ -159,16 +172,17 @@ export default new Vuex.Store({
       },
       
       addQuestion({commit}, payload){
-
         commit('ADD_QUESTION', payload)
       },
 
       addGame({commit}, newGame){
         commit('ADD_GAME', newGame)
       },
+
       addNewCatagory({commit}, newCatagoryName){
         commit('ADD_NEW_CATAGORY', newCatagoryName)
       },
+
       addCatagory({commit}, payload){
         commit('ADD_CATAGORY', payload)
       },
@@ -176,12 +190,15 @@ export default new Vuex.Store({
       addPlayerBuzz({commit},playerID){
         commit('ADD_PLAYER_BUZZ',playerID)
       },
+
       clearPlayerBuzz({commit}){
         commit('CLEAR_PLAYER_BUZZ_QUEUE')
       },
+
       setAnswered({commit}){
         commit('SET_ANSWERED')
       },
+
       setCurrentAnsweringQuestionID({commit},questionID){
         commit('SET_CURRENT_ANSWERING_QUESTIONID',questionID)
       },
@@ -189,9 +206,11 @@ export default new Vuex.Store({
       playerJoin({commit},playerName){
         commit('PLAYER_JOIN',playerName)
       },
+
       fightAnswer({commit},playerName){
         commit('FIGHT_ANSWER',playerName)
       },
+
       inQuestion({commit},inQuestion){
         commit('IN_QUESTION',inQuestion)
       }
