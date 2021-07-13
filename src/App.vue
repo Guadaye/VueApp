@@ -1,5 +1,5 @@
 <!--
-<pg-app></pg-app>
+Copyright (c) 2021. Haojun Liu. All Rights Reserved.
 -->
 <template>
 

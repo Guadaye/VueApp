@@ -1,4 +1,10 @@
+<!--
+VFS VUE Single File Component
 
+<pgPlayerInGame name="User"></pgPlayerInGame>
+
+Copyright (c) 2021.Haojun All Rights Reserved.
+-->
 <template>
 
 

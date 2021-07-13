@@ -1,9 +1,9 @@
 <!--
 VFS VUE Single File Component
 
-<pg-header></pg-header>
+<pgPlayerInGame name="User"></pgPlayerInGame>
 
-Copyright (c) 2018. Scott Henshaw, Kibble Online Inc. All Rights Reserved.
+Copyright (c) 2018.Haojun All Rights Reserved.
 -->
 <template>
 

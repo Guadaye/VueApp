@@ -1,3 +1,6 @@
+ /*
+Copyright (c) 2021. Haojun Liu. All Rights Reserved.
+*/
  'use strict';
 
  import Express from 'express'
@@ -7,10 +10,10 @@
  import HTTP from 'http'
  import FileSystem from 'fs'
 
- import Result from '../lib/result'
- import Game from '../model/Game'
- import Catagory from '../model/Catagory'
- import Question from '../model/Question'
+ //import Result from '../lib/result'
+ //import Game from '../model/Game'
+ //import Catagory from '../model/Catagory'
+ //import Question from '../model/Question'
  import PlayerAPI from './api/player'
 
  const PORT =2990;
@@ -36,7 +39,6 @@
             .use( Express.urlencoded({ extended: false }))
             .use( Express.static( Path.join(__dirname, '../../public') ))
             .use( CORS( corsOptions )).options('/*', this.corsHandler )
-           // .use('/api/lobby', lobby )
             .use('/api/player', PlayerAPI )
 
         this.run();

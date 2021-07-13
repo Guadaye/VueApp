@@ -1,8 +1,9 @@
 <!--
 VFS VUE Single File Component
 
-<pg-sidebar></pg-sidebar>
+<pgPlayerInGame name="User"></pgPlayerInGame>
 
+Copyright (c) 2018.Haojun All Rights Reserved.
 -->
 <template>
 

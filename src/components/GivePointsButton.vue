@@ -1,8 +1,9 @@
 <!--
-<some-tag-name title="My Component">
-    -- user can add their own HTML code here, replaces 'slot' component --
-</some-tag-name>
+VFS VUE Single File Component
 
+<pgPlayerInGame name="User"></pgPlayerInGame>
+
+Copyright (c) 2018.Haojun All Rights Reserved.
 -->
 <template>
 

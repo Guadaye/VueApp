@@ -6,7 +6,7 @@ import Catagory from '@/model/Catagory.js'
 import Axios from 'axios'
 
 Vue.use(Vuex,Axios)
-Axios.defaults.basURL= 'http://localhost:3000'
+Axios.defaults.basURL= 'http://localhost:2990'
 
 export default new Vuex.Store({
   state: {
@@ -149,17 +149,16 @@ export default new Vuex.Store({
           state.playerinHostLobbyList.push(playerName)
         },
 
-        USER_CONNECTED:(state)=>{
-          console.log("store shows "+data)
+        USER_CONNECTED:(state,data)=>{
+          console.log("Round trip data back from server: "+data)
         },
     },
     actions: {
       connect({commit}){
-        console.log("store shows ");
-          Axios.post('/api/player/connect', this.state.currentGameIndex)
+        console.log("send data to server from store");
+          Axios.post('http://localhost:2990/api/player/connect', this.state.currentGameIndex)
           .then(response =>response.data)
-    //      .then(data=> console.log("store shows "+data))
-          .then(data => commit('USER_CONNECTED',data.payload))
+          .then(data => {commit('USER_CONNECTED', data)})
           .catch(error=>console.log(error))
       },
 

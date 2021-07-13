@@ -1,6 +1,6 @@
 /*
 VUE App's MAIN Component.
-
+Copyright (c) 2021. Haojun Liu. All Rights Reserved.
 */
 'use strict';
 
