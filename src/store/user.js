@@ -187,8 +187,8 @@ export default{
     },
 
     bindGameList:firestoreAction(({bindFirestoreRef})=>{
-      console.log("trying to add")
-      return bindFirestoreRef('gameList',db.collection('game'))
+      console.log("trying to add");
+      return bindFirestoreRef('gameList',db.collection('gameList'))
     }),
 
    bindCatagoryList:firestoreAction(({bindFirestoreRef})=>{
@@ -203,13 +203,8 @@ export default{
       return db.collection('notes').add(payload)
     }),
   
-    updateNote:firestoreAction(({state}, payload) => {
-
-      const note = {...state.notes};
-      note.data = payload.data;
-      return db.collection('notes')
-          .doc(this.note.id)
-          .set(note)
+    updateNote:firestoreAction(async({state}, payload) => {
+    await db.collection("notes").doc(payload.id).update({data:payload.data});
   }),
 
 
@@ -237,7 +232,7 @@ export default{
     },
 
     addGameVuexFire:firestoreAction((context,newGame)=>{
-      return db.collection('game').add(JSON.parse(JSON.stringify(newGame)))
+      return db.collection('gameList').add(JSON.parse(JSON.stringify(newGame)))
     }),
 
     addNewCatagory({commit}, newCatagoryName){
@@ -252,8 +247,8 @@ export default{
       commit('ADD_CATAGORY', payload)
     },
 
-    addCatagoryToGameListVuexFire:firestoreAction((context,payload)=>{
-      return db.collection('game').add()
+    updateGameListVuexFire:firestoreAction(async({state}, payload) => {
+      await db.collection("gameList").doc(payload.id).update(JSON.parse(JSON.stringify(payload.game)));
     }),
 
     addPlayerBuzz({commit},playerID){
@@ -287,7 +282,7 @@ export default{
   },
 
   getters:{
-    gameList: state=>state.gameList,
+    gameList: (state)=>{return state.gameList},
     inQuestionPage:state=>state.inQuestionPage,
     catagoryList:state=>state.catagoryList,
     currentGameIndex:state=>state.currentGameIndex,
@@ -295,5 +290,6 @@ export default{
     playerinHostLobbyList:state=>state.playerinHostLobbyList,
     teamConfig:state=>state.teamConfig,
     theDB: state=>state.db,
+    notes: (state)=>{return state.notes}
   },
 }

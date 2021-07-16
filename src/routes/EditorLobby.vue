@@ -10,20 +10,27 @@ Copyright (c) 2018.Haojun All Rights Reserved.
 
              
                     <h3>Name of your game:</h3><br>
-                    <input type="text"   v-model="gameList[editGameIndex].gameName"><br>
+                    <input type="text"   v-model="gameName"><br>
 
                     <h3>Question numbers for each catagory:</h3><br>
-                    <input type="text"   v-model="gameList[editGameIndex].questionNumber" ><br>
+                    <input type="text"   v-model="questionNumber" ><br>
 
                     <h3>Catagory picked:</h3> 
+                    <!--
                     <div v-for="(item, index) in gameList[editGameIndex].catagoryList" :key="item.catagoryName">
-
-                        <select v-model ="gameList[editGameIndex].catagoryList[index].catagoryName"><br>
-                            <option v-for="(catagory) in catagoryList"  :key="catagory"> {{catagory}}  </option>                    
+                        <select v-model ="this.gameList[editGameIndex].catagoryList[index].catagoryName"><br>
+                            <option v-for="(catagory) in this.catagoryList"  :key="catagory"> {{catagory}}  </option>                    
 
                         </select><br>
-                        
+                   
                     </div><br><br>
+                        -->
+                     <div v-for="(item,index) in chosenCatagoryList" :key="item.catagoryName">
+                        <select v-model ="chosenCatagoryList[index].catagoryName"><br>
+                            <option v-for="(catagory) in catagoryList"  :key="catagory"> {{catagory.newCatagoryName}}  </option>                    
+
+                        </select><br>
+                     </div>
                              <button @click="addAnotherCatagory">Add</button><br> 
                     <input class="normal-button" type="submit" @click="editGame" value="Create Game!" >                          
         </div>
@@ -73,35 +80,40 @@ Copyright (c) 2018.Haojun All Rights Reserved.
                 name: 'Editor Lobby',
                 gameSettingPage : false,
                 editGameIndex:0,
+                chosenCatagoryList:[],
       
             }
 
             this.injectGetters(['gameList','catagoryList']);
-            this.injectActions(['addCatagoryToGameListVuexFire','addNewCatagoryVuexFire','bindCatagoryList','addQuestionVuexFire','bindGameList','addGameVuexFire','addGame','setGame','addNewCatagory','addQuestion','addCatagory']);
-
-
+            this.injectActions(['updateGameListVuexFire','addNewCatagoryVuexFire','bindCatagoryList','addQuestionVuexFire','bindGameList','addGameVuexFire','addGame','setGame','addNewCatagory','addQuestion','addCatagory']);
         }
         createEmptyGame(){
-
-            this.bindGameList();
+         
             let game = new GameE(this.gameId,this.gameName, this.questionNumber, this.chosenCatagoryList);
-            this.addGame(game);
             this.addGameVuexFire(game);
             this.editGameIndex=this.gameList.length-1;//the last/newest game in game list
-            this.gameSettingPage = true;
-             
+            this.gameSettingPage = true;        
+          
         }
 
         editGame(){
-              for (let i = 0; i<this.gameList[this.editGameIndex].questionNumber;i++)//question number1-5
-            {        
-                let question = new Question();
-                let gi = this.editGameIndex; 
-                let payload ={question:question,gi:gi}
-                this.addQuestion(payload); 
-                //addQuestionVuexFire(payload);   
-           } 
-             this.gameSettingPage = false;
+         console.log(this.gameList);
+            this.chosenCatagoryList.forEach (cata=>{
+                
+                   
+                for (let i = 0; i<this.gameList[this.editGameIndex].questionNumber;i++)//question number1-5
+                {        
+                    let question = new Question();
+                      cata.questionList.push(question);
+                } 
+                          
+            })
+            let idForCurrentGame = this.gameList[this.editGameIndex].id;
+
+            let updatedGame = new GameE(this.gameId,this.gameName, this.questionNumber, this.chosenCatagoryList);
+            this.updateGameListVuexFire({id:idForCurrentGame,game:updatedGame});
+
+             this.gameSettingPage = false; 
         }
 
         gameSetting(index){
@@ -109,16 +121,16 @@ Copyright (c) 2018.Haojun All Rights Reserved.
             this.editGameIndex=index;
         }
 
+       //add all the catagory player chosen to local temp storage.
         addAnotherCatagory()
         {
             let catagory = new Catagory();
-            let gi = this.editGameIndex; 
-            let payload ={catagory:catagory,gi:gi}
-            this.addCatagory(payload);
-            this.addCatagoryToGameListVuexFire(payload);
+            this.chosenCatagoryList.push(catagory);
+            
         }
+
         catagorySubmit(){
-            console.log("submit");
+
           //  this.addNewCatagory(this.catagoryName);
             this.addNewCatagoryVuexFire(this.catagoryName);
             this.gameSettingPage = false;
@@ -132,7 +144,30 @@ Copyright (c) 2018.Haojun All Rights Reserved.
         setActive(){
             
         }
+/*
 
+
+        editGame(){
+              for (let i = 0; i<this.gameList[this.editGameIndex].questionNumber;i++)//question number1-5
+            {        
+                let question = new Question();
+                let gi = this.editGameIndex; 
+                let payload ={question:question,gi:gi}
+                this.addQuestion(payload); 
+               
+           } 
+             this.gameSettingPage = false;
+        }
+
+        addAnotherCatagory()
+        {
+            let catagory = new Catagory();
+            let gi = this.editGameIndex; 
+            let payload ={catagory:catagory,gi:gi}
+            this.addCatagory(payload);
+            this.addCatagoryToGameListVuexFire(payload);
+        }
+        */
     }
 
     export default new EditorLobbyController('pgQEditorLobby',{pgbackButton});

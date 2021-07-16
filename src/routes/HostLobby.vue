@@ -75,18 +75,21 @@ Copyright (c) 2021.Haojun All Rights Reserved.
                 gameIndex:0,
                 chosenCatagoryList:null
             }
-            this.injectGetters(['gameList','playerinHostLobbyList']);  
+            this.injectGetters(['gameList','notes','playerinHostLobbyList']);  
              this.injectActions(['setGame','updateNote','setGameStatus','addNote']); 
 
         }
 
          submit() {
-             this.setGameStatus();
-            this.updateNote({data:777,id:"abc"});
+           //  this.setGameStatus();
+           let idForNotes = this.notes[this.notes.length-1].id;
+
+            this.updateNote({data:777,id:idForNotes});
           //   this.addNote({data:1,id:"firstNote"});
              console.log("host lobby");
             this.setGame(this.gameIndex);             
             this.isSplash=false;
+            console.log(this.idForNotes);
         }
         changeTest(){
             //保存数据 跳转
