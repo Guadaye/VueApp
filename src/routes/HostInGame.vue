@@ -63,7 +63,7 @@ class HostInGameController extends Controller {
   }
   addPoint(scoreValue,id)
   {
-
+    
       for (let index in this.teamConfig){        
         let team=this.teamConfig[index];  
         for(let players in team.playerid){                

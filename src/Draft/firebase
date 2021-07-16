@@ -1,0 +1,43 @@
+
+      /*
+    setGameStatus(){
+      console.log("setGameStatus");
+      firestoreAction(context =>{
+      return context.bindFirestoreRef('currentGameIndex',db.collection('game'))
+    }) 
+     
+    },
+
+    setGameStatus: ( context ) => firestoreAction( context => {
+ 
+      return context.bindFirestoreRef('currentGameIndex',db.collection('game'))
+    }),
+*/
+ /*
+    loadPlayerList({commit, getters}){
+
+      return new Promise((resolve,reject)=>{
+          let playerList = [];
+          let playerCollection = state.theDB.collection("player");
+            // generate query to filter out players that match my game
+          let query = playerCollection.where("team","==","1");
+
+          //fetch them all
+          query.get()
+          .then(resultList=>{
+
+
+         //create a player object, trigger mutation to save it
+         resultList.docs.forEach(doc => {
+
+           let tempPlayer = new Player(doc);
+           tempPlayer.populate(doc);
+           commit('ADD_PLAYER',tempPlayer);
+         })
+         resolve();//do you need to hand something back
+          })
+          .catch(error=>reject(error))
+        });
+
+    },
+*/

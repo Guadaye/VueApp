@@ -3,7 +3,7 @@ VFS VUE Single File Component
 
 <pgPlayerInGame name="User"></pgPlayerInGame>
 
-Copyright (c) 2018.Haojun All Rights Reserved.
+Copyright (c) 2021.Haojun All Rights Reserved.
 -->
 <template>
 
@@ -34,14 +34,21 @@ class PlayerInGameController extends Controller {
 
     }
       this.injectGetters(['inQuestionPage','currentGameIndex']);
-     this.injectActions(['playerJoin','fightAnswer','connect']);
+     this.injectActions(['playerJoin','bindPlayerData','fightAnswer','connect']);
   }
+
+
 
   submit() {
     if(!this.name){
       alert("please input name")
       return;
     }
+
+    this.loadPlayerList()
+    .then(()=>{
+
+
     if(this.currentGameIndex>=0)
     {
     this.playerJoin(this.name);
@@ -51,6 +58,10 @@ class PlayerInGameController extends Controller {
     else
          alert("game hasn't started yet");
         this.connect();
+      
+    })
+    .catch(error =>console.log(error))
+
   }
 
   tapToFightAnswer(){

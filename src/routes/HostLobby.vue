@@ -76,14 +76,16 @@ Copyright (c) 2021.Haojun All Rights Reserved.
                 chosenCatagoryList:null
             }
             this.injectGetters(['gameList','playerinHostLobbyList']);  
-             this.injectActions(['setGame']); 
+             this.injectActions(['setGame','updateNote','setGameStatus','addNote']); 
 
         }
 
          submit() {
-             this.setGame(this.gameIndex);
-
-             
+             this.setGameStatus();
+            this.updateNote({data:777,id:"abc"});
+          //   this.addNote({data:1,id:"firstNote"});
+             console.log("host lobby");
+            this.setGame(this.gameIndex);             
             this.isSplash=false;
         }
         changeTest(){
@@ -93,6 +95,7 @@ Copyright (c) 2021.Haojun All Rights Reserved.
 
         startGame()
         {
+            this.setGameStatus();
             console.log("StartGame");
             this.$router.push("/HostInGame");
         }

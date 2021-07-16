@@ -11,13 +11,18 @@ Copyright (c) 2018.Haojun All Rights Reserved.
       <pgbackButton></pgbackButton>
       <score-board></score-board> 
       <div   class="questionBoard">                    
-          <div v-for="catagoryIndex in gameList[currentGameIndex].catagoryList" :key="catagoryIndex.catagoryName" class="catagory">
+  <!--        <div v-for="catagoryIndex in gameList[currentGameIndex].catagoryList" :key="catagoryIndex.catagoryName" class="catagory">
               <div  class="cate-name">{{catagoryIndex.catagoryName}}</div>
               <div class="question" v-for="questionIndex in catagoryIndex.questionList " :key="questionIndex.answer">
               <button class="questionBtn" v-if="questionIndex.answered ==false" @click="goToQuestion(questionIndex.questionID)"  >{{questionIndex.scoreValue}}</button>
-              </div>
-          </div>     
+              
+               
+          
+           
+          </div>  
+               -->
       </div>
+      
     </div>
 
 
@@ -94,7 +99,7 @@ class BigScreenController extends Controller {
           }
         }
       }
-
+/*
   goToQuestion(id)
   {   
       this.setCurrentAnsweringQuestionID(id);
@@ -118,7 +123,7 @@ class BigScreenController extends Controller {
       this.inQuestionLobby= true;
       this.setAnswered();
   }
-
+*/
 }
 
 export default new BigScreenController('BigScreen', {ScoreBoard,pgbackButton});

@@ -31,15 +31,28 @@ Copyright (c) 2018.Haojun All Rights Reserved.
             this.props = {
                 name: String,
             }
+
+            this.injectGetters(['gameList','catagoryList']);
+            this.injectActions(['setGameStatus','bindCatagoryList','bindGameList']);
+
+        }
+
+        bindEverything(){
+            this.bindCatagoryList();
+            this.bindGameList();
+            this.setGameStatus();
         }
 
         player() {
+            this.bindEverything();
             this.$router.push("/PlayerInGame");
         }
         host(){
+            this.bindEverything();
             this.$router.push("/HostLobby");
         }
         editor(){
+            this.bindEverything();
             this.$router.push("/EditorLobby");
         }
     }

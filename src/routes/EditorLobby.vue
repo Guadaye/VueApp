@@ -69,8 +69,6 @@ Copyright (c) 2018.Haojun All Rights Reserved.
                 currentGame:[],
                 gameName: "",
                 questionNumber : 4,
-          //      chosenCatagoryList:[],
-           //     chosenCatagoryName: "",
                 catagoryName: "",
                 name: 'Editor Lobby',
                 gameSettingPage : false,
@@ -79,24 +77,29 @@ Copyright (c) 2018.Haojun All Rights Reserved.
             }
 
             this.injectGetters(['gameList','catagoryList']);
-            this.injectActions(['addGame','setGame','addNewCatagory','addQuestion','addCatagory']);
+            this.injectActions(['addCatagoryToGameListVuexFire','addNewCatagoryVuexFire','bindCatagoryList','addQuestionVuexFire','bindGameList','addGameVuexFire','addGame','setGame','addNewCatagory','addQuestion','addCatagory']);
+
+
         }
         createEmptyGame(){
+
+            this.bindGameList();
             let game = new GameE(this.gameId,this.gameName, this.questionNumber, this.chosenCatagoryList);
             this.addGame(game);
-            this.editGameIndex=this.gameList.length-1;
+            this.addGameVuexFire(game);
+            this.editGameIndex=this.gameList.length-1;//the last/newest game in game list
             this.gameSettingPage = true;
              
         }
 
-
-        editGame(gi){
-              for (let i = 0; i<this.gameList[this.editGameIndex].questionNumber;i++)
+        editGame(){
+              for (let i = 0; i<this.gameList[this.editGameIndex].questionNumber;i++)//question number1-5
             {        
                 let question = new Question();
                 let gi = this.editGameIndex; 
                 let payload ={question:question,gi:gi}
-                this.addQuestion(payload);    
+                this.addQuestion(payload); 
+                //addQuestionVuexFire(payload);   
            } 
              this.gameSettingPage = false;
         }
@@ -112,10 +115,12 @@ Copyright (c) 2018.Haojun All Rights Reserved.
             let gi = this.editGameIndex; 
             let payload ={catagory:catagory,gi:gi}
             this.addCatagory(payload);
+            this.addCatagoryToGameListVuexFire(payload);
         }
         catagorySubmit(){
             console.log("submit");
-            this.addNewCatagory(this.catagoryName);
+          //  this.addNewCatagory(this.catagoryName);
+            this.addNewCatagoryVuexFire(this.catagoryName);
             this.gameSettingPage = false;
         }
         backToLobby(){
