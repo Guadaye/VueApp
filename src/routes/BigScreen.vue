@@ -14,11 +14,7 @@ Copyright (c) 2018.Haojun All Rights Reserved.
   <!--        <div v-for="catagoryIndex in gameList[currentGameIndex].catagoryList" :key="catagoryIndex.catagoryName" class="catagory">
               <div  class="cate-name">{{catagoryIndex.catagoryName}}</div>
               <div class="question" v-for="questionIndex in catagoryIndex.questionList " :key="questionIndex.answer">
-              <button class="questionBtn" v-if="questionIndex.answered ==false" @click="goToQuestion(questionIndex.questionID)"  >{{questionIndex.scoreValue}}</button>
-              
-               
-          
-           
+              <button class="questionBtn" v-if="questionIndex.answered ==false" @click="goToQuestion(questionIndex.questionID)"  >{{questionIndex.scoreValue}}</button>                    
           </div>  
                -->
       </div>

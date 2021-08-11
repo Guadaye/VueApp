@@ -28,7 +28,7 @@ export default new Router({
         { path:"/HostInGame", name:"HostInGame", component: HostInGame },
         { path:"/HostLobby", name:"HostLobby", component: HostLobby },
         { path:"/GameSettingEditor", name:"GameSettingEditor", component: GameSettingEditor },
-        { path:"/QuestionEditor", name:"QuestionEditor", component: QuestionEditor },
+        { path:"/QuestionEditor", name:"QuestionEditor", component: QuestionEditor, props:true},
         { path:"/EditorLobby", name:"EditorLobby", component: EditorLobby },
         { path:"/BigScreen", name:"BigScreen", component: BigScreen }
     ]

@@ -22,32 +22,33 @@ Copyright (c) 2021.Haojun All Rights Reserved.
 
                 <input class="normal-button" type="submit"  value="Start Hosting!" >
             </form>
+
+            <button  @click="ClearLastGameData()">ClearLastGameData</button>
        </div>
 
         <div v-else >
             <pgbackButton></pgbackButton>
             <h1>Avaliable players:</h1>
             <div v-for="playerName in playerinHostLobbyList" :key ="playerName" class="playerList">{{playerName}}</div>
-
-
                 <div class = "teamArea">
                     <form @submit.prevent ="startGame()"  class="form">
                         <h1>Team1</h1>
-                            <select id="game" name="Game">
-                                <option v-for="playerName in playerinHostLobbyList" :key ="playerName" value="">{{playerName}} </option>
+                            <select v-model="teamOne[0]">
+                                <option v-for="(player) in playerinHostLobbyList" :key ="player" >{{player}}</option>
                             </select>
-                            <select id="game" name="Game">
-                                <option value="">Banana </option>
+                            <select v-model="teamOne[1]">
+                                <option v-for="(player) in playerinHostLobbyList" :key ="player" >{{player}}</option>
                             </select>
 
                         <h1>Team2</h1>
-                        <select id="game" name="Game">
-                             <option v-for="playerName in playerinHostLobbyList" :key ="playerName" value="">{{playerName}} </option>
-                        </select>
-                        <select id="game" name="Game">
-                             <option v-for="playerName in playerinHostLobbyList" :key ="playerName" value="">{{playerName}} </option>
-                        </select><br>
-                        <input type="submit"  value="Start Game!" >
+                            <select v-model="teamTwo[0]">
+                                <option v-for="(player) in playerinHostLobbyList" :key ="player.name" >{{player}}</option>
+                            </select>
+                            <select v-model="teamTwo[1]">
+                                <option v-for="(player) in playerinHostLobbyList" :key ="player.name" >{{player}}</option>
+                            </select>
+                            <br> 
+                        <input type="submit" @click="startGame" value="Start Game!" >
                     </form>
 
                     
@@ -69,36 +70,52 @@ Copyright (c) 2021.Haojun All Rights Reserved.
                 name: 'HostLobby',
                 isSplash:true,
                 playerList:["Apple", "Watermelon", "Banana", "Orange"],           
-                chosenGameIndex:0,                                
+                chosenGameIndex:0, 
+                                            
                 teamOne:[],
                 teamTwo:[],
                 gameIndex:0,
                 chosenCatagoryList:null
             }
             this.injectGetters(['gameList','notes','playerinHostLobbyList']);  
-             this.injectActions(['setGame','updateNote','setGameStatus','addNote']); 
+            this.injectActions(['setGame','setGameVuexFire','changePointVueFire','updateNote','setGameStatus','addNote','playerJoinVuexFire']); 
 
         }
 
-         submit() {
-           //  this.setGameStatus();
-           let idForNotes = this.notes[this.notes.length-1].id;
-
-            this.updateNote({data:777,id:idForNotes});
-          //   this.addNote({data:1,id:"firstNote"});
-             console.log("host lobby");
-            this.setGame(this.gameIndex);             
+         submit() {           
+             this.setGameVuexFire({GameOn:true,pickedGameId:this.gameIndex});
+          //  this.setGame(this.gameIndex);  
             this.isSplash=false;
-            console.log(this.idForNotes);
-        }
-        changeTest(){
-            //保存数据 跳转
-            console.log("chosenCatagoryList:"+this.chosenCatagoryList)
+
         }
 
-        startGame()
-        {
-            this.setGameStatus();
+        ClearLastGameData(){
+            for(let i=0; i<3;i++){               
+                this.playerJoinVuexFire({id:i+1,newName:""});
+            }
+            this.setGameVuexFires({GameOn:false,pickedGameId:-1});
+            for(let i=0;i<1;i++){
+                this.changePointVueFire({teamNum:i+1,score:0});
+            }
+        }
+
+        startGame(){
+    //        for(let i=0; i<1;i++){
+  //              this.playerJoinVuexFire({id:playerinHostLobbyList[0],newName:this.teamOne[i]});
+    //            this.playerJoinVuexFire({id:i+3,newName:this.teamTwo[i]});
+   //         }
+
+            this.teamOne.forEach(player=>{   
+               let playerObject = JSON.parse(player);    
+                 this.playerJoinVuexFire({id:playerObject.playerId,name:playerObject.name,team:1});
+            })
+            
+            this.teamTwo.forEach(player=>{
+                  let playerObject = JSON.parse(player);  
+                  this.playerJoinVuexFire({id:playerObject.playerId,name:playerObject.name,team:2});
+            })
+
+           // this.setGameStatus();
             console.log("StartGame");
             this.$router.push("/HostInGame");
         }

@@ -31,44 +31,54 @@ class PlayerInGameController extends Controller {
     this.vm = {
       name: '',
       isSplash:true,
-
+      myId:-1,
+      signedInAlready:false,
     }
-      this.injectGetters(['inQuestionPage','currentGameIndex']);
-     this.injectActions(['playerJoin','bindPlayerData','fightAnswer','connect']);
+    this.injectGetters(['playerinHostLobbyList','inQuestionPage','currentGameIndex','localInGameStatus','playerBuzzQueue']);
+    this.injectActions(['playerJoin','playerJoinVuexFire','fightAnswer','connect','fightAnswerVuexFire']);
   }
-
-
 
   submit() {
     if(!this.name){
-      alert("please input name")
+      alert("please input name");
       return;
     }
+    if(this.localInGameStatus[0].GameOn==true){
+      for(let i = 0; i<this.playerinHostLobbyList.length;i++){
+          if(this.playerinHostLobbyList[i].name==""){
+             //local: this.playerinHostLobbyList.name =this.name;
 
-    this.loadPlayerList()
-    .then(()=>{
-
-
-    if(this.currentGameIndex>=0)
-    {
-    this.playerJoin(this.name);
-    this.isSplash=false;
+             //keep a local id for player to identify itself
+              this.myId = i+1;
+              this.playerJoinVuexFire({id:i+1,name:this.name,team:-1});
+              console.log("Succesfully joined");
+                    this.isSplash=false;  
+                  
+              return;
+            }
+          }
+      }
+      //TODO: NOTE IF LIST IF FULL
+       // this.playerJoinVuexFire(this.name);  
     
+    else{
+        alert("game hasn't started yet");     
     }
-    else
-         alert("game hasn't started yet");
-        this.connect();
-      
-    })
-    .catch(error =>console.log(error))
-
   }
 
   tapToFightAnswer(){
-    if(this.inQuestionPage)
-    {
-        this.fightAnswer(this.name);
-    }
+      if(this.localInGameStatus[1].inQuestionPage){
+
+         for(let i = 0; i<this.playerinHostLobbyList.length;i++){
+            if(this.playerBuzzQueue[i].name==""){
+                let myInfo = this.playerinHostLobbyList[this.myId-1];
+              // this.fightAnswer(this.name);          
+                this.fightAnswerVuexFire({playerInfo:myInfo,sequence:i+1});
+                console.log(myInfo);
+                return;
+            }
+          }
+      }
   }
 }
 

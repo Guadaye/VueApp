@@ -35,8 +35,6 @@ Copyright (c) 2018.Haojun All Rights Reserved.
             }
                   this.injectGetters(['teamConfig']);
         }
-
-
     }
 
     export default new ScordBoardController('pgGScordBoard'/* , { subComponent, anotherComponent } */);

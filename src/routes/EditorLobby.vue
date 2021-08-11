@@ -8,31 +8,30 @@ Copyright (c) 2018.Haojun All Rights Reserved.
 <template>
         <div v-if="gameSettingPage" class = "container">
 
-             
-                    <h3>Name of your game:</h3><br>
-                    <input type="text"   v-model="gameName"><br>
+            <h3>Name of your game:</h3><br>
+            <input type="text"   v-model="gameName"><br>
 
-                    <h3>Question numbers for each catagory:</h3><br>
-                    <input type="text"   v-model="questionNumber" ><br>
+            <h3>Question numbers for each catagory:</h3><br>
+            <input type="text"   v-model="questionNumber" ><br>
 
-                    <h3>Catagory picked:</h3> 
-                    <!--
-                    <div v-for="(item, index) in gameList[editGameIndex].catagoryList" :key="item.catagoryName">
-                        <select v-model ="this.gameList[editGameIndex].catagoryList[index].catagoryName"><br>
-                            <option v-for="(catagory) in this.catagoryList"  :key="catagory"> {{catagory}}  </option>                    
+            <h3>Catagory picked:</h3> 
+            <!--
+            <div v-for="(item, index) in gameList[editGameIndex].catagoryList" :key="item.catagoryName">
+                <select v-model ="this.gameList[editGameIndex].catagoryList[index].catagoryName"><br>
+                    <option v-for="(catagory) in this.catagoryList"  :key="catagory"> {{catagory}}  </option>                    
 
-                        </select><br>
-                   
-                    </div><br><br>
-                        -->
-                     <div v-for="(item,index) in chosenCatagoryList" :key="item.catagoryName">
-                        <select v-model ="chosenCatagoryList[index].catagoryName"><br>
-                            <option v-for="(catagory) in catagoryList"  :key="catagory"> {{catagory.newCatagoryName}}  </option>                    
+                </select><br>
+            
+            </div><br><br>
+                -->
+            <div v-for="(item,index) in chosenCatagoryList" :key="item.catagoryName">
+            <select v-model ="chosenCatagoryList[index].catagoryName"><br>
+                <option v-for="(catagory) in catagoryList"  :key="catagory"> {{catagory.newCatagoryName}}  </option>                    
 
-                        </select><br>
-                     </div>
-                             <button @click="addAnotherCatagory">Add</button><br> 
-                    <input class="normal-button" type="submit" @click="editGame" value="Create Game!" >                          
+            </select><br>
+            </div>
+                    <button @click="addAnotherCatagory">Add</button><br> 
+            <input class="normal-button" type="submit" @click="editGame" value="Create Game!" >                          
         </div>
 
         <div v-else class="container">{{ name }}
@@ -80,40 +79,36 @@ Copyright (c) 2018.Haojun All Rights Reserved.
                 name: 'Editor Lobby',
                 gameSettingPage : false,
                 editGameIndex:0,
-                chosenCatagoryList:[],
-      
+                chosenCatagoryList:[],     
             }
 
             this.injectGetters(['gameList','catagoryList']);
             this.injectActions(['updateGameListVuexFire','addNewCatagoryVuexFire','bindCatagoryList','addQuestionVuexFire','bindGameList','addGameVuexFire','addGame','setGame','addNewCatagory','addQuestion','addCatagory']);
         }
-        createEmptyGame(){
-         
+
+        createEmptyGame(){        
             let game = new GameE(this.gameId,this.gameName, this.questionNumber, this.chosenCatagoryList);
             this.addGameVuexFire(game);
             this.editGameIndex=this.gameList.length-1;//the last/newest game in game list
-            this.gameSettingPage = true;        
-          
+            this.gameSettingPage = true;                  
         }
 
         editGame(){
          console.log(this.gameList);
-            this.chosenCatagoryList.forEach (cata=>{
-                
-                   
+            this.chosenCatagoryList.forEach (cata=>{                               
                 for (let i = 0; i<this.gameList[this.editGameIndex].questionNumber;i++)//question number1-5
                 {        
                     let question = new Question();
-                      cata.questionList.push(question);
-                } 
-                          
+                    question.questionID = i+1;
+                    cata.questionList.push(question);
+                }                           
             })
             let idForCurrentGame = this.gameList[this.editGameIndex].id;
 
             let updatedGame = new GameE(this.gameId,this.gameName, this.questionNumber, this.chosenCatagoryList);
             this.updateGameListVuexFire({id:idForCurrentGame,game:updatedGame});
 
-             this.gameSettingPage = false; 
+            this.gameSettingPage = false; 
         }
 
         gameSetting(index){
@@ -122,24 +117,21 @@ Copyright (c) 2018.Haojun All Rights Reserved.
         }
 
        //add all the catagory player chosen to local temp storage.
-        addAnotherCatagory()
-        {
+        addAnotherCatagory(){
             let catagory = new Catagory();
-            this.chosenCatagoryList.push(catagory);
-            
+            this.chosenCatagoryList.push(catagory);           
         }
 
         catagorySubmit(){
-
-          //  this.addNewCatagory(this.catagoryName);
             this.addNewCatagoryVuexFire(this.catagoryName);
             this.gameSettingPage = false;
         }
         backToLobby(){
             this.gameSettingPage = false;
         }
-        editQuestions(){
-            this.$router.push("/QuestionEditor");
+        editQuestions(index){
+            console.log("fromEditorLobby" + index);                
+            this.$router.push({name:"QuestionEditor",params:{gameId:index}});    
         }
         setActive(){
             

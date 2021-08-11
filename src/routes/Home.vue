@@ -33,14 +33,18 @@ Copyright (c) 2018.Haojun All Rights Reserved.
             }
 
             this.injectGetters(['gameList','catagoryList']);
-            this.injectActions(['setGameStatus','bindCatagoryList','bindGameList']);
+            this.injectActions(['bindPlayerInBuzzQueue','bindTeamConfig','bindInGameStatus','bindplayerinHostLobbyList','bindCatagoryList','bindGameList','clearGameStatus']);
 
         }
 
         bindEverything(){
             this.bindCatagoryList();
+            this.bindInGameStatus();
             this.bindGameList();
-            this.setGameStatus();
+            this.bindPlayerInBuzzQueue();
+          //  this.setGameStatus();
+            this.bindplayerinHostLobbyList();
+            this.bindTeamConfig();
         }
 
         player() {

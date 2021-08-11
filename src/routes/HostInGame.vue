@@ -7,33 +7,34 @@ Copyright (c) 2021.Haojun All Rights Reserved.
 -->
 <template>
 
-    <div v-if="inQuestionPage" class = "container">
+    <div v-if="localInGameStatus[1].inQuestionPage" class = "container">
         <div class = "back">
             <button @click="backToQuestionBoard">back</button>
         </div>
              <score-board> </score-board> 
-        <div > {{question}}</div>
-        <div > {{answer}}</div>
-
+        <div >Question: {{question}}</div>
+        <div >Answer: {{answer}}</div>
+        <div >ScoreValue: {{scoreValue}}</div>
         <div class="playerBoard">
             <div v-for="player in playerBuzzQueue" :key = "player.name">
               <span>{{player.name}}</span>
-              <button v-if="player.itsTurn" @click="addPoint(scoreValue, player.queueID)">Add Point</button>
-              <button v-if="player.itsTurn" @click="addPoint(-scoreValue,player.queueID)">Deduct Point</button>
+              <button v-if="player.itsTurn" @click="addPoint(1, player)">Add Point</button>
+              <button v-if="player.itsTurn" @click="addPoint(-1,player)">Deduct Point</button>
             </div>
         </div>
     </div>
 
     <div v-else class="container">
       <pgbackButton></pgbackButton>
-      <score-board></score-board> 
-      <div   class="questionBoard">                    
-          <div v-for="catagoryIndex in gameList[currentGameIndex].catagoryList" :key="catagoryIndex.catagoryName" class="catagory">
+        <score-board></score-board>  
+      <div  class="questionBoard">           
+          <div v-for="catagoryIndex in gameList[localInGameStatus[0].pickedGameId].catagoryList" :key="catagoryIndex.catagoryName" class="catagory">
               <div  class="cate-name">{{catagoryIndex.catagoryName}}</div>
+
               <div  v-for="questionIndex in catagoryIndex.questionList " :key="questionIndex.answer">
-              <button class="question"  :class="questionIndex.answered ==true?'invisible':''"  @click="goToQuestion(questionIndex.questionID)"  >{{questionIndex.scoreValue}}</button>
+                  <button class="question"  :class="questionIndex.answered ==true?'invisible':''"  @click="goToQuestion(questionIndex.questionID)"  >{{questionIndex.scoreValue}}</button>
               </div>
-          </div>     
+          </div>   
       </div>
     </div>
 
@@ -52,52 +53,39 @@ class HostInGameController extends Controller {
       name: 'HostInGame',
       id:null,
       question:"",
-      answer:"",
-      scoreValue:null,     
+      answer:"",   
       inQuestionLobby: true,
+      scoreValue:0,
      
     }
-
-      this.injectGetters(['gameList','currentGameIndex','playerBuzzQueue','teamConfig','inQuestionPage']);
-      this.injectActions(['clearPlayerBuzz','setCurrentAnsweringQuestionID','setAnswered','inQuestion']);
+      this.injectGetters(['gameList','localInGameStatus','playerBuzzQueue','teamConfig','inQuestionPage']);
+      this.injectActions(['setCurrentAnsweringQuestionID','inQuestionVuexFire','changePointVueFire',
+                          'setAnswered','inQuestion','changeQueueTurn','changeQueueStatusVuexFire','fightAnswerVuexFire']);
   }
-  addPoint(scoreValue,id)
-  {
-    
-      for (let index in this.teamConfig){        
-        let team=this.teamConfig[index];  
-        for(let players in team.playerid){                
-         let player=team.playerid[players]; 
-          if (player == id){
-            team.score+=scoreValue;
-            if(scoreValue>=0){
-                 this.inQuestion(false);   
-              this.clearPlayerBuzz();
-              this.setAnswered();   
-            }
-            else{
-              for(let pcindex in this.playerBuzzQueue){
-                let pcPlayer = this.playerBuzzQueue[pcindex];
-                if(pcPlayer.queueID==id){
-                    console.log(this.playerBuzzQueue[pcindex++].itsTurn);
-                    pcPlayer.itsTurn=false;                  
 
-                    this.playerBuzzQueue[pcindex++].itsTurn=true;
-                    }
-                }
-              }     
-            }
-          }
+  addPoint(addedScore,player){   
+        if(addedScore>0){
+          let newScore =this.teamConfig[(player.team)-1].score+addedScore*this.scoreValue;
+          this.changePointVueFire({score: newScore,teamNum:player.team});
+          this.backToQuestionBoard();
         }
-      }
-
+        else{
+          let newScore =this.teamConfig[(player.team)-1].score+addedScore*this.scoreValue;
+          this.changePointVueFire({score: newScore,teamNum:player.team});
+            //playerBuzzQueue[sequence].itsTurn=true;
+            let nextPlayer = this.playerBuzzQueue[player.sequence];
+            this.changeQueueTurn({playerInfo:player,itsTurn:false});
+            this.changeQueueTurn({playerInfo:nextPlayer,itsTurn:true});
+        }
+    }
+  
   goToQuestion(id)
   {   
       this.setCurrentAnsweringQuestionID(id);
 
-      for (let index in this.gameList[this.currentGameIndex].catagoryList){
+      for (let index in this.gameList[this.localInGameStatus[0].pickedGameId].catagoryList){
         console.log("incatagoryList");
-        let cate=this.gameList[this.currentGameIndex].catagoryList[index];  
+        let cate=this.gameList[this.localInGameStatus[0].pickedGameId].catagoryList[index];  
         for(let questionIndex in cate.questionList){            
          let question=cate.questionList[questionIndex]; 
           if (question.questionID == id){
@@ -106,17 +94,24 @@ class HostInGameController extends Controller {
             this.scoreValue = question.scoreValue;
           }       
         }
-
       }   
-              this.inQuestion(true);   
+            this.inQuestionVuexFire(true);   
   }
 
-  backToQuestionBoard() {
-    this.inQuestion(false);   
-      this.setAnswered();
+  backToQuestionBoard()
+  {
+      this.inQuestionVuexFire(false); 
+      
+      for(let i=0; i<3;i++){    
+        let localPlayerInfo ={name:"",team:1,playerId:-1}
+        //clear buzz queue
+        this.changeQueueStatusVuexFire({playerInfo:localPlayerInfo,sequence:i+1});                   
+      };      
+      //this.setAnswered();
   }
 
-}
+      }
+
 
 export default new HostInGameController('pgHostInGame', {ScoreBoard,pgbackButton});
 

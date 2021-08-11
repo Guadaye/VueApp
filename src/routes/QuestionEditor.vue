@@ -12,27 +12,29 @@ Copyright (c) 2018.Haojun All Rights Reserved.
 
         <div class="about">{{ name }}
 
-            <h1>{{gameConfig.gameName}}</h1>
-            <h2>Question Id:{{id}}</h2>
-
-          <h2>Catagory:{{gameConfig.catagoryList[catagoryListIndex].catagoryName}}</h2>
+            <h1>{{gameList[$route.params.gameId].gameName}}</h1>
+ 
+            <h2>Question Id:{{gameList[$route.params.gameId].catagoryList[this.catagoryListIndex].questionList[questionListIndex].questionID}}</h2>
+                
+          <h2>Catagory:{{gameList[$route.params.gameId].catagoryList[catagoryListIndex].catagoryName}}</h2>
           
 
             <form id="info-form" class="form">
             Question:<br>
-            <input type="text"  v-model="gameConfig.catagoryList[catagoryListIndex].questionList[questionListIndex].question" ><br>
+            <input type="text"  v-model="gameList[$route.params.gameId].catagoryList[catagoryListIndex].questionList[questionListIndex].question" ><br>
             Answer:<br>
-            <input type="text"  v-model="gameConfig.catagoryList[catagoryListIndex].questionList[questionListIndex].answer" ><br>
+            <input type="text"  v-model="gameList[$route.params.gameId].catagoryList[catagoryListIndex].questionList[questionListIndex].answer" ><br>
             QuestionValue:<br>
-            <input type="text"   v-model="gameConfig.catagoryList[catagoryListIndex].questionList[questionListIndex].scoreValue"><br>
+            <input type="text"   v-model="gameList[$route.params.gameId].catagoryList[catagoryListIndex].questionList[questionListIndex].scoreValue"><br>
 
-            <input class="normal-button" type="submit"  value="Submit" >
+            <input class="normal-button" type="submit" @click="submit" value="Submit" >
+           
                     
           </form>
-
+                <!--    -->
            
-          <button class="button" @click="preNextQuestion(-1)">Previous Question</button>
-          <button class="button" @click="preNextQuestion(1)">Next Question</button>
+            <button class="button" @click="preNextQuestion(-1)">Previous Question</button>
+            <button class="button" @click="preNextQuestion(1)">Next Question</button>
         </div>
 
 
@@ -54,46 +56,14 @@ Copyright (c) 2018.Haojun All Rights Reserved.
                 id:1,
                 catagoryListIndex:0,
                 questionListIndex:0,
-    gameConfig:  {
-        gameName: "game1",
-        questionNumber: 2,
-        catagoryList :[
-                        {catagoryName: "science", 
-                        questionList:[{
-                                      id:1,
-                                      question:"what is the color of apple?",
-                                      answer:"red",
-                                      scoreValue:200},
-                                      {
-                                        id:2,
-                                        question:"what is the color of bababa?",
-                                      answer:"red",
-                                      scoreValue:200}]},
-                       {catagoryName: "anime", 
-                        questionList:[{
-                                        id:3,
-                                        question:"what is the color of ccc?",
-                                        answer:"red",
-                                        scoreValue:200},
-                                       {
-                                         id:4,
-                                         question:"what is the color of ddd?",
-                                         answer:"red",
-                                         scoreValue:200}]},
-                       {catagoryName: "animal", 
-                        questionList:[{
-                                       id:5,
-                                       question:"what is the color of rrr?",
-                                       answer:"red",
-                                       scoreValue:200},
-                                       {
-                                        id:6,
-                                        question:"what is the color of sss?",
-                                        answer:"red",
-                                        scoreValue:200}]}
-                      ]
-                      }
             }
+            this.params ={
+                gameId: 0,
+            }
+
+            this.injectGetters(['gameList','currentGameIndex',]);
+            this.injectActions(['updateQuestionVuexFire','updateGameListVuexFire']);
+         
         }
             preNextQuestion(page)
             {
@@ -101,7 +71,7 @@ Copyright (c) 2018.Haojun All Rights Reserved.
                     if(this.questionListIndex+page<0){//如果题目在最开头了
                         if(this.catagoryListIndex+page>=0){ //如果不是最开头的类
                             this.catagoryListIndex--;//去到上一个类
-                            this.questionListIndex=this.gameConfig.catagoryList[this.catagoryListIndex].questionList.length-1;
+                            this.questionListIndex=this.gameList[this.$route.params.gameId].catagoryList[this.catagoryListIndex].questionList.length-1;
                         }
                         //如果是最开头的类不做事
                     }
@@ -110,8 +80,8 @@ Copyright (c) 2018.Haojun All Rights Reserved.
                     }    
                 }
                 else{
-                    if(this.questionListIndex+page+1>this.gameConfig.catagoryList[this.catagoryListIndex].questionList.length){//如果题目在最末尾了
-                        if(this.catagoryListIndex+page+1<=this.gameConfig.catagoryList.length){ //如果不是最后一个类
+                    if(this.questionListIndex+page+1>this.gameList[this.$route.params.gameId].catagoryList[this.catagoryListIndex].questionList.length){//如果题目在最末尾了
+                        if(this.catagoryListIndex+page+1<=this.gameList[this.$route.params.gameId].catagoryList.length){ //如果不是最后一个类
                             this.catagoryListIndex++;//去到下一个类
                             this.questionListIndex=0;
                         }                 
@@ -121,7 +91,18 @@ Copyright (c) 2018.Haojun All Rights Reserved.
                     }     
                 }
             }
+            submit()  //TODO: MAYBE STORE DATA LOCALLY AND THEN SUBMIT AFTER ALL THE QUESTIONS ARE FILLED
+            {
+                let fireStoreIdForCurrentGame = this.gameList[this.$route.params.gameId].id;
 
+                let updatedQuestion = this.gameList[this.$route.params.gameId].catagoryList[this.catagoryListIndex].questionList[this.questionListIndex];
+                updatedQuestion.answer = this.gameList[this.$route.params.gameId].catagoryList[this.catagoryListIndex].questionList[this.questionListIndex].answer;
+                updatedQuestion.question = this.gameList[this.$route.params.gameId].catagoryList[this.catagoryListIndex].questionList[this.questionListIndex].answer;
+                updatedQuestion.scoreValue = this.gameList[this.$route.params.gameId].catagoryList[this.catagoryListIndex].questionList[this.questionListIndex].scoreValue;
+                
+                this.updateGameListVuexFire({id:fireStoreIdForCurrentGame,game:this.gameList[this.$route.params.gameId]});
+                
+            }
     }
 
     export default new EditorLobbyController('pgQEditorLobby',{pgbackButton});

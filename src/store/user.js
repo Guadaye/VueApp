@@ -20,6 +20,7 @@ export default{
     notes:{data:555,id:"sdfd"},
     startHosting:false,
     inQuestionPage:false,
+    localInGameStatus:{GameOn:true, PickedGameId:-1},
     currentGameIndex:-1,  
     currentAnsweringQuestionID:0,
     gameList:[     
@@ -83,8 +84,6 @@ export default{
       {queueID:2,name:"player2",itsTurn:false},
       {queueID:3,name:"player3",itsTurn:false}
       ],
-
-
 }),
 
   mutations: {
@@ -106,16 +105,9 @@ export default{
       state.score =[0,0];
       console.log(state.gameList.id);
 
-   /*
-     const Ref = db.collection('notes').doc('RV6FO1ewpdKc1EJLMEpi');
-      Ref.get().then(result=>{
-      console.log('Document data:', result.data());
-     })
-      */
-
     },
 
-    IN_QUESTION:(state,inQuestion)=>state.inQuestionPage=inQuestion,
+    IN_QUESTION:(state,inQuestion)=>{state.inQuestionPage=inQuestion},
 
     SET_CURRENT_ANSWERING_QUESTIONID:(state, questionID)=>{
       state.currentAnsweringQuestionID = questionID
@@ -123,7 +115,6 @@ export default{
 
     ADD_GAME:(state, newGame)=>{
       state.gameList.push(newGame);
-
     },
 
     ADD_NEW_CATAGORY:(state,newCatagoryName)=>{
@@ -187,16 +178,27 @@ export default{
     },
 
     bindGameList:firestoreAction(({bindFirestoreRef})=>{
-      console.log("trying to add");
       return bindFirestoreRef('gameList',db.collection('gameList'))
     }),
 
-   bindCatagoryList:firestoreAction(({bindFirestoreRef})=>{
-    return bindFirestoreRef('catagoryList',db.collection('catagoryList'))
-  }),
+    bindCatagoryList:firestoreAction(({bindFirestoreRef})=>{
+      return bindFirestoreRef('catagoryList',db.collection('catagoryList'))
+    }),
 
-    setGameStatus:firestoreAction(({bindFirestoreRef})=>{
-      return bindFirestoreRef('notes',db.collection('notes'))
+    bindInGameStatus:firestoreAction(({bindFirestoreRef})=>{
+      return bindFirestoreRef('localInGameStatus',db.collection('InGameStatus'))
+    }),
+
+    bindplayerinHostLobbyList:firestoreAction(({bindFirestoreRef})=>{
+      return bindFirestoreRef('playerinHostLobbyList',db.collection('players'))
+    }),
+
+    bindPlayerInBuzzQueue:firestoreAction(({bindFirestoreRef})=>{
+      return bindFirestoreRef('playerBuzzQueue',db.collection('playerInBuzzQueue'))
+    }),
+
+    bindTeamConfig:firestoreAction(({bindFirestoreRef})=>{
+      return bindFirestoreRef('teamConfig',db.collection('teamConfig'))
     }),
 
     addNote:firestoreAction((context,payload)=>{
@@ -204,14 +206,14 @@ export default{
     }),
   
     updateNote:firestoreAction(async({state}, payload) => {
-    await db.collection("notes").doc(payload.id).update({data:payload.data});
-  }),
+      await db.collection("notes").doc(payload.id).update({data:payload.data});
+    }),
 
-
-
-    loadPlayerList({commit}){
-
-    },
+    playerJoinVuexFire:firestoreAction(async({state}, payload) => {
+      console.log("playerId "+payload.id+" name "+payload.name + " team "+payload.team);
+      let playerNumber =payload.id.toString();
+      await db.collection("players").doc(playerNumber).update({playerId:payload.id, name:payload.name, team:payload.team, })
+    }),
 
     setGame({commit},gameIndex){
       commit('SET_CURRENT_GAME', gameIndex)
@@ -224,9 +226,11 @@ export default{
     addQuestion({commit}, payload){
       commit('ADD_QUESTION', payload)
     },
+
     addQuestionVuexFire:firestoreAction((context,newGame)=>{
       return db.collection('game').add(JSON.parse(JSON.stringify(newGame)))
     }),
+
     addGame({commit}, newGame){
       commit('ADD_GAME', newGame)
     },
@@ -249,6 +253,12 @@ export default{
 
     updateGameListVuexFire:firestoreAction(async({state}, payload) => {
       await db.collection("gameList").doc(payload.id).update(JSON.parse(JSON.stringify(payload.game)));
+    }),
+    updateQuestionVuexFire:firestoreAction(async({state},payload)=>{
+      await db.collection("gameList").doc(payload.id).catagoryList[payload.catagoryIndex].questionList[payload.questionListIndex].update(JSON.parse(JSON.stringify(payload.question)));
+    }),
+    setGameVuexFire:firestoreAction(async({state},payload)=>{
+      await db.collection("InGameStatus").doc("GameOn").update(JSON.parse(JSON.stringify({GameOn:payload.GameOn,pickedGameId:payload.pickedGameId})));
     }),
 
     addPlayerBuzz({commit},playerID){
@@ -275,9 +285,45 @@ export default{
       commit('FIGHT_ANSWER',playerName)
     },
 
+    changeQueueStatusVuexFire:firestoreAction(async({state},payload)=>{
+      let playerTurn = false;
+      if(payload.sequence ==1){
+        playerTurn=true;
+      }
+      let docString = payload.sequence.toString();
+      await db.collection("playerInBuzzQueue").doc(docString)
+      .update({name:payload.playerInfo.name,
+               playerId:payload.playerInfo.playerId,
+               team:payload.playerInfo.team,
+               sequence:payload.sequence,
+                itsTurn:playerTurn});
+    }),
+
+    changeQueueTurn:firestoreAction(async({state},payload)=>{
+      let currentSequenceStr = (payload.playerInfo.sequence).toString();
+      await db.collection("playerInBuzzQueue").doc(currentSequenceStr)
+      .update({name:payload.playerInfo.name,
+              playerId:payload.playerInfo.playerId,
+              team:payload.playerInfo.team,
+              sequence:payload.playerInfo.sequence,
+              itsTurn:payload.itsTurn});
+    }),
+
+    changePointVueFire:firestoreAction(async({state},payload)=>{
+      console.log(payload.teamNum+" "+payload.score);
+      let team = (payload.teamNum).toString();
+      await db.collection("teamConfig").doc(team).update({score:payload.score});
+    }),
+
+
     inQuestion({commit},inQuestion){
       commit('IN_QUESTION',inQuestion)
-    }
+    },
+
+    inQuestionVuexFire:firestoreAction(async({state},payload)=>{
+        await db.collection("InGameStatus").doc("inQuestionPage").update({inQuestionPage:payload});
+    }),
+
     
   },
 
@@ -290,6 +336,8 @@ export default{
     playerinHostLobbyList:state=>state.playerinHostLobbyList,
     teamConfig:state=>state.teamConfig,
     theDB: state=>state.db,
-    notes: (state)=>{return state.notes}
+    notes: (state)=>{return state.notes},
+    localInGameStatus:state=>state.localInGameStatus,
+    
   },
 }
